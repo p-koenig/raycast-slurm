@@ -56,7 +56,7 @@
     },
     {
       "name": "select-cluster",
-      "title": "Select Cluster",
+      "title": "Select Clusters",
       "subtitle": "Slurm",
       "description": "Select the active SSH hosts and authentiate.",
       "mode": "view"

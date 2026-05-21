@@ -88,7 +88,7 @@ export default function SelectCluster() {
 
   if (!hostsLoading && configState && configState.kind !== "ok") {
     return (
-      <List isLoading={hostsLoading} searchBarPlaceholder="Filter clusters…" navigationTitle="Select Cluster">
+      <List isLoading={hostsLoading} searchBarPlaceholder="Filter clusters…" navigationTitle="Select Clusters">
         <ConfigStateEmptyView state={configState} onReload={() => revalidate()} />
       </List>
     );
@@ -98,7 +98,7 @@ export default function SelectCluster() {
     <List
       isLoading={hostsLoading}
       searchBarPlaceholder="Filter clusters…"
-      navigationTitle={(active ?? []).length > 0 ? `Select Cluster — ${(active ?? []).join(", ")}` : "Select Cluster"}
+      navigationTitle={(active ?? []).length > 0 ? `Select Clusters — ${(active ?? []).join(", ")}` : "Select Clusters"}
     >
       {sorted.length === 0 && staleActive.length === 0 ? (
         <List.EmptyView

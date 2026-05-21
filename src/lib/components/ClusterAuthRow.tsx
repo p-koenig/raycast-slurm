@@ -62,7 +62,7 @@ export function ClusterAuthRow({ host, info, onReauth }: { host: string; info: S
             />
           )}
           <Action
-            title="Open Select Cluster"
+            title="Open Select Clusters"
             icon={Icon.List}
             onAction={() => launchCommand({ name: "select-cluster", type: LaunchType.UserInitiated })}
           />

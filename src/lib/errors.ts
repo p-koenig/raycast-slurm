@@ -184,7 +184,7 @@ export function makeHostNotInConfigError(host: string): SshError {
     host,
     title: `Host '${host}' is not in ~/.ssh/config`,
     message: "There's no matching Host entry for this alias.",
-    hint: 'Add a Host entry to ~/.ssh/config or pick another host in "Select Cluster".',
+    hint: 'Add a Host entry to ~/.ssh/config or pick another host in "Select Clusters".',
     raw: `resolveHost('${host}') returned null`,
   });
 }

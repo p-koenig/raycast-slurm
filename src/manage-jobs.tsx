@@ -374,7 +374,7 @@ function NoHostView() {
         actions={
           <ActionPanel>
             <Action
-              title="Open Select Cluster"
+              title="Open Select Clusters"
               icon={Icon.List}
               onAction={() => launchCommand({ name: "select-cluster", type: LaunchType.UserInitiated })}
             />

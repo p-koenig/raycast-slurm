@@ -1,6 +1,6 @@
 # Slurm
 
-Manage Slurm jobs and inspect cluster resources from Raycast. All commands run over a multiplexed SSH connection (`ControlMaster`), so you only authenticate once per session — including 2FA.
+Manage [Slurm Workload Manager](https://github.com/schedmd/slurm) jobs and inspect cluster resources from Raycast. All commands run over a multiplexed SSH connection (`ControlMaster`), so you only authenticate once per session — including 2FA.
 
 ## Requirements
 
@@ -9,28 +9,31 @@ Manage Slurm jobs and inspect cluster resources from Raycast. All commands run o
 
 ## Getting Started
 
-1. Open **Select Cluster** and press `↵` on your cluster. If a password or 2FA prompt is needed, a Terminal window opens automatically — log in there, then return to Raycast
-2. Select additional clusters if needed
+1. Install extension **Slurm** from the Raycast extension store
+2. Open **Select Clusters** and press `↵` on all clusters you wanna monitor. If a password or 2FA prompt is needed, a Terminal window opens automatically — log in there, close terminal, then return to Raycast
 3. Use any other command — they will run for all active clusters
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| **My Slurm Jobs** | Your jobs with status, elapsed time, resource usage, logs, and cancel option |
-| **All Slurm Jobs** | Same view for all jobs |
-| **HPC Info** | Hardware information for all compute nodes |
-| **HPC Util** | Live per-node CPU load, memory utilization and GPU allocation |
-| **Slurm Menu Bar** | Running and pending job counts in the macOS menu bar |
-| **Select Cluster** | Activate or deactivate SSH connections to your clusters |
+
+| Command             | Description                                                                  |
+| ------------------- | ---------------------------------------------------------------------------- |
+| **My Slurm Jobs**   | Your jobs with status, elapsed time, resource usage, logs, and cancel option |
+| **All Slurm Jobs**  | Same view for all jobs                                                       |
+| **HPC Info**        | Hardware information for all compute nodes                                   |
+| **HPC Util**        | Live per-node CPU load, memory utilization and GPU allocation                |
+| **Slurm Menu Bar**  | Running and pending job counts in the macOS menu bar                         |
+| **Select Clusters** | Activate or deactivate SSH connections to your clusters                      |
+
 
 ## Preferences
 
-| Preference | Default | Description |
-|---|---|---|
-| **Control Persist** | `12h` | How long the SSH connection stays alive after the last command (OpenSSH `ControlPersist`) |
-| **Slurm User** | *(auto)* | Remote username for `squeue`. Leave blank to detect via `whoami` on first use |
+
+| Preference          | Default | Description                                                                               |
+| ------------------- | ------- | ----------------------------------------------------------------------------------------- |
+| **Control Persist** | `12h`   | How long the SSH connection stays alive after the last command (OpenSSH `ControlPersist`) |
+
 
 ## Multiple Clusters
 
-You can keep several clusters active at once. All data pages show one section per active cluster. Press `↵` on a cluster in **Select Cluster** to toggle it; this keeps the SSH connection alive so re-activation is instant. Use `⌘⇧X` to fully close the connection and logout.
+You can keep several clusters active at once. All data pages show one section per active cluster. Press `↵` on a cluster in **Select Clusters** to toggle it; this keeps the SSH connection alive so re-activation is instant. Use `⌘⇧X` to fully close the connection and logout.
