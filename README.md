@@ -1,6 +1,6 @@
-# SLURM
+# Slurm
 
-Manage SLURM jobs and inspect cluster resources from Raycast. All commands run over a multiplexed SSH connection (`ControlMaster`), so you only authenticate once per session — including 2FA.
+Manage Slurm jobs and inspect cluster resources from Raycast. All commands run over a multiplexed SSH connection (`ControlMaster`), so you only authenticate once per session — including 2FA.
 
 ## Requirements
 
@@ -17,11 +17,11 @@ Manage SLURM jobs and inspect cluster resources from Raycast. All commands run o
 
 | Command | Description |
 |---|---|
-| **My SLURM Jobs** | Your jobs with status, elapsed time, resource usage, logs, and cancel option |
-| **All SLURM Jobs** | Same view for all jobs |
+| **My Slurm Jobs** | Your jobs with status, elapsed time, resource usage, logs, and cancel option |
+| **All Slurm Jobs** | Same view for all jobs |
 | **HPC Info** | Hardware information for all compute nodes |
 | **HPC Util** | Live per-node CPU load, memory utilization and GPU allocation |
-| **SLURM Menu Bar** | Running and pending job counts in the macOS menu bar |
+| **Slurm Menu Bar** | Running and pending job counts in the macOS menu bar |
 | **Select Cluster** | Activate or deactivate SSH connections to your clusters |
 
 ## Preferences
@@ -29,7 +29,7 @@ Manage SLURM jobs and inspect cluster resources from Raycast. All commands run o
 | Preference | Default | Description |
 |---|---|---|
 | **Control Persist** | `12h` | How long the SSH connection stays alive after the last command (OpenSSH `ControlPersist`) |
-| **SLURM User** | *(auto)* | Remote username for `squeue`. Leave blank to detect via `whoami` on first use |
+| **Slurm User** | *(auto)* | Remote username for `squeue`. Leave blank to detect via `whoami` on first use |
 
 ## Multiple Clusters
 

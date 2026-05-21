@@ -48,7 +48,7 @@ export default function MenuBar() {
     return (
       <MenuBarExtra
         icon={{ source: Icon.Plug, tintColor: Color.SecondaryText }}
-        title="SLURM"
+        title="Slurm"
         tooltip="No active clusters"
       >
         <MenuBarExtra.Item
@@ -64,7 +64,7 @@ export default function MenuBar() {
     <MenuBarExtra
       icon={{ source: Icon.CircleFilled, tintColor: tint }}
       title={title}
-      tooltip={`SLURM @ ${hostsLabel}`}
+      tooltip={`Slurm @ ${hostsLabel}`}
       isLoading={isLoading}
     >
       {clusters.map((r) => (

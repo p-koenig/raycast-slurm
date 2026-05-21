@@ -187,7 +187,7 @@ export function gpuLabelFromTres(tres: string): string | null {
 }
 
 function prettifyGpuModel(raw: string): string {
-  // SLURM gres types are lowercase with underscores (e.g. "rtx_pro_6000",
+  // Slurm gres types are lowercase with underscores (e.g. "rtx_pro_6000",
   // "a100", "h200"). Replace underscores with spaces and uppercase the first
   // character of each token for readability.
   return raw

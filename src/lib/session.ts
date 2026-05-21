@@ -52,7 +52,7 @@ export function useSlurmUser(host: string | null) {
 }
 
 /**
- * Detect the SLURM username on every active cluster in parallel.
+ * Detect the Slurm username on every active cluster in parallel.
  */
 export function useSlurmUsers(hosts: string[]) {
   const key = hosts.join("|");

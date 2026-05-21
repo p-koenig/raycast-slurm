@@ -81,7 +81,7 @@ export default function AllJobs() {
     <List
       isLoading={isLoading}
       searchBarPlaceholder="Search jobs across clusters…"
-      navigationTitle={hosts.length ? `All Jobs — ${hosts.join(", ")}` : "All SLURM Jobs"}
+      navigationTitle={hosts.length ? `All Jobs — ${hosts.join(", ")}` : "All Slurm Jobs"}
       searchBarAccessory={
         <ClusterFilterDropdown tooltip="Filter" value={filter} onChange={setFilter} clusters={partitionsPerCluster} />
       }
