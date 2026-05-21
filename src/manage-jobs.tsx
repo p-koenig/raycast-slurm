@@ -67,13 +67,18 @@ export default function ManageJobs() {
     return () => clearInterval(t);
   }, [ready, usersKey, revalidate]);
 
-  // Aggregate menu-bar subtitle.
-  useEffect(() => {
+  // Aggregate command subtitle — derived in render so we can key the side
+  // effect on the *string*, not on the upstream object refs which churn
+  // every revalidation tick even when the displayed value is unchanged.
+  const subtitle = useMemo(() => {
+    if (!hosts.length) return "";
     const all = (results ?? []).flatMap((r) => (r.ok ? r.data : []));
-    const counts = countByState(all);
-    const subtitle = hosts.length ? `${hosts.join(",")} — ${formatCounts(counts)}` : "";
-    void updateCommandMetadata({ subtitle });
+    return `${hosts.join(",")} — ${formatCounts(countByState(all))}`;
   }, [hosts, results]);
+
+  useEffect(() => {
+    void updateCommandMetadata({ subtitle });
+  }, [subtitle]);
 
   const partitionsPerCluster = useMemo(
     () => partitionsByCluster<Job>((results ?? []) as ClusterResult<Job[]>[], (j) => j.partition),

@@ -1,8 +1,18 @@
 /**
  * Demo mode for Raycast extension store screenshots.
  *
- * Toggle on:   RAYCAST_SLURM_DEMO=1 npm run dev
- * Toggle off:  npm run dev   (default)
+ * Toggle ON:
+ *     touch ~/.raycast-slurm-demo
+ *     then reload the extension in Raycast (⌘R) or restart `npm run dev`
+ *
+ * Toggle OFF:
+ *     rm ~/.raycast-slurm-demo
+ *     then reload the extension in Raycast (⌘R) or restart `npm run dev`
+ *
+ * (Env vars like RAYCAST_SLURM_DEMO=1 don't reach the extension worker —
+ * Raycast spawns it from Raycast.app, not from the npm shell — so we use
+ * a marker file instead. As a manual override, you can also flip
+ * FORCE_DEMO below to true.)
  *
  * When DEMO_MODE is on:
  *   - SSH calls are intercepted in runSsh() and never touch the network
@@ -12,9 +22,25 @@
  * Mock data flows through the real parsers (parseJobRow, parseNodeLine,
  * tokenizeKv), so any drift in expected wire formats surfaces immediately.
  */
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
 import type { Host } from "./ssh-config";
 
-export const DEMO_MODE = process.env.RAYCAST_SLURM_DEMO === "1";
+const FORCE_DEMO = false; // flip to true for an unconditional override
+const MARKER_FILE = path.join(os.homedir(), ".raycast-slurm-demo");
+
+function detectDemoMode(): boolean {
+  if (FORCE_DEMO) return true;
+  if (process.env.RAYCAST_SLURM_DEMO === "1") return true;
+  try {
+    return fs.existsSync(MARKER_FILE);
+  } catch {
+    return false;
+  }
+}
+
+export const DEMO_MODE = detectDemoMode();
 
 export const DEMO_USER = "r.shaw";
 
@@ -1062,7 +1088,18 @@ function jobToMineRow(j: MockJob): string {
   // squeue -o "%i|%P|%j|%T|%M|%l|%D|%C|%R|%b"
   // The 10th field (%b = BatchFeatures) gets overridden by parseAllocTres downstream,
   // so we just put "(null)" — same as real Slurm output when no features are requested.
-  return [j.jobId, j.partition, j.name, j.state, j.elapsed, j.timeLimit, j.nodes, j.cpus, j.reasonOrNodeList, "(null)"].join("|");
+  return [
+    j.jobId,
+    j.partition,
+    j.name,
+    j.state,
+    j.elapsed,
+    j.timeLimit,
+    j.nodes,
+    j.cpus,
+    j.reasonOrNodeList,
+    "(null)",
+  ].join("|");
 }
 
 function jobToAllRow(j: MockJob): string {
@@ -1188,7 +1225,10 @@ export async function mockRunSsh(host: string, cmd: string): Promise<string> {
   }
 
   if (cmd.startsWith("scontrol show job ")) {
-    const jobId = cmd.replace("scontrol show job ", "").trim().replace(/^'(.*)'$/, "$1");
+    const jobId = cmd
+      .replace("scontrol show job ", "")
+      .trim()
+      .replace(/^'(.*)'$/, "$1");
     return jobDetail(host, jobId) + "\n";
   }
 
