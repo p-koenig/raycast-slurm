@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "slurm",
   "title": "Slurm",
-  "description": "Manage Slurm jobs and check ressource utilization on multiple clusters using SSH.",
+  "description": "Manage Slurm jobs and check ressource utilization on multiple clusters using SSH",
   "icon": "icon.png",
   "author": "p-koenig",
   "license": "MIT",
