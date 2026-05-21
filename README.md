@@ -1,6 +1,6 @@
 # Raycast-Slurm
 
-Manage [Slurm Workload Manager](https://github.com/schedmd/slurm) jobs accross multiple clusters and inspect utilization from Raycast.
+Manage [Slurm Workload Manager](https://github.com/schedmd/slurm) jobs across multiple clusters and inspect utilization from Raycast.
 
 ## Requirements
 
