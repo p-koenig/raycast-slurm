@@ -4,6 +4,7 @@ import * as path from "node:path";
 import fg from "fast-glob";
 import SSHConfig from "ssh-config";
 import { LocalStorage } from "@raycast/api";
+import { DEMO_MODE, DEMO_HOSTS } from "./demo";
 
 const SSH_DIR = path.join(os.homedir(), ".ssh");
 const ACTIVE_HOST_KEY = "activeHost";
@@ -117,6 +118,9 @@ async function loadConfig(): Promise<SSHConfig | null> {
 export type ListHostsResult = { hosts: Host[]; state: ConfigState };
 
 export async function listHosts(): Promise<ListHostsResult> {
+  if (DEMO_MODE) {
+    return { hosts: [...DEMO_HOSTS], state: { kind: "ok", cfg: SSHConfig.parse("") } };
+  }
   const state = await loadConfigState();
   if (state.kind !== "ok") return { hosts: [], state };
 
@@ -182,6 +186,7 @@ export async function getActiveHosts(): Promise<string[]> {
     await LocalStorage.removeItem(ACTIVE_HOST_KEY);
     return migrated;
   }
+  if (DEMO_MODE) return DEMO_HOSTS.map((h) => h.name);
   return [];
 }
 

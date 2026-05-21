@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "slurm",
   "title": "Slurm",
-  "description": "Manage Slurm jobs and check ressource utilization on multiple clusters using SSH",
+  "description": "Manage Slurm jobs across multiple clusters and inspect utilization from Raycast",
   "icon": "icon.png",
   "author": "p-koenig",
   "license": "MIT",
@@ -10,8 +10,8 @@
   "preferences": [
     {
       "name": "controlPersist",
-      "title": "Control Persist",
-      "description": "OpenSSH ControlPersist value (e.g. 10m, 1h).",
+      "title": "Session Timeout",
+      "description": "SSH timeout value (e.g. 10m, 1h, 24h).",
       "type": "textfield",
       "required": false,
       "default": "12h"

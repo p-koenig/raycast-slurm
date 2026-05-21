@@ -1,6 +1,6 @@
-# Slurm
+# Raycast-Slurm
 
-Manage [Slurm Workload Manager](https://github.com/schedmd/slurm) jobs and inspect cluster resources from Raycast. All commands run over a multiplexed SSH connection (`ControlMaster`), so you only authenticate once per session — including 2FA.
+Manage [Slurm Workload Manager](https://github.com/schedmd/slurm) jobs accross multiple clusters and inspect utilization from Raycast.
 
 ## Requirements
 

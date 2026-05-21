@@ -7,6 +7,7 @@ import { getPreferenceValues } from "@raycast/api";
 import { runAppleScript } from "@raycast/utils";
 import { listHosts } from "./ssh-config";
 import { SshError, makeHostNotInConfigError, toSshError } from "./errors";
+import { DEMO_MODE, isDemoHost, mockRunSsh } from "./demo";
 
 export { SshError, SshAuthError } from "./errors";
 
@@ -54,6 +55,7 @@ function baseOpts(): string[] {
 const knownHosts = new Set<string>();
 
 async function requireHostInConfig(host: string): Promise<void> {
+  if (DEMO_MODE && isDemoHost(host)) return;
   if (knownHosts.has(host)) return;
   const { hosts, state } = await listHosts();
   if (state.kind === "missing") {
@@ -83,6 +85,7 @@ async function requireHostInConfig(host: string): Promise<void> {
 }
 
 export async function isMasterUp(host: string): Promise<boolean> {
+  if (DEMO_MODE && isDemoHost(host)) return true;
   await ensureControlDir();
   try {
     await requireHostInConfig(host);
@@ -94,6 +97,7 @@ export async function isMasterUp(host: string): Promise<boolean> {
 }
 
 export async function openMaster(host: string): Promise<void> {
+  if (DEMO_MODE && isDemoHost(host)) return;
   await ensureControlDir();
   await requireHostInConfig(host);
   try {
@@ -104,6 +108,7 @@ export async function openMaster(host: string): Promise<void> {
 }
 
 export async function closeMaster(host: string): Promise<void> {
+  if (DEMO_MODE && isDemoHost(host)) return;
   await ensureControlDir();
   try {
     await execFileP(SSH_BIN, [...baseOpts(), "-O", "exit", host], { timeout: 5_000 });
@@ -115,6 +120,7 @@ export async function closeMaster(host: string): Promise<void> {
 export type RunOpts = { timeout?: number; maxBuffer?: number };
 
 export async function runSsh(host: string, cmd: string, opts: RunOpts = {}): Promise<string> {
+  if (DEMO_MODE && isDemoHost(host)) return mockRunSsh(host, cmd);
   await ensureControlDir();
   await requireHostInConfig(host);
   try {
@@ -139,6 +145,7 @@ export function interactiveOpenMasterCmd(host: string): string {
 }
 
 export async function openMasterInTerminal(host: string): Promise<void> {
+  if (DEMO_MODE && isDemoHost(host)) return;
   const cmd = interactiveOpenMasterCmd(host);
   await runAppleScript(`
     tell application "Terminal"
