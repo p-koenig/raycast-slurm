@@ -19,10 +19,8 @@ const SSH_BIN = "/usr/bin/ssh";
 const CONTROL_DIR = path.join("/tmp", `raycast-slurm-${os.userInfo().uid ?? "u"}`);
 const CONTROL_PATH = path.join(CONTROL_DIR, "ssh-%C");
 
-type SharedPrefs = { controlPersist?: string };
-
 function controlPersist(): string {
-  const prefs = getPreferenceValues<SharedPrefs>();
+  const prefs = getPreferenceValues<Preferences>();
   return prefs.controlPersist?.trim() || "10m";
 }
 

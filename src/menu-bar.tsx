@@ -52,7 +52,7 @@ export default function MenuBar() {
         tooltip="No active clusters"
       >
         <MenuBarExtra.Item
-          title="Select Clusterss…"
+          title="Select Clusters…"
           icon={Icon.List}
           onAction={() => launchCommand({ name: "select-cluster", type: LaunchType.UserInitiated })}
         />
@@ -113,7 +113,7 @@ export default function MenuBar() {
           onAction={() => launchCommand({ name: "manage-jobs", type: LaunchType.UserInitiated })}
         />
         <MenuBarExtra.Item
-          title="Select Clusterss…"
+          title="Select Clusters…"
           icon={Icon.Repeat}
           onAction={() => launchCommand({ name: "select-cluster", type: LaunchType.UserInitiated })}
         />
