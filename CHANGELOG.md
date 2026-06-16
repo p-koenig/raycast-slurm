@@ -6,7 +6,7 @@
 - Job detail is organized into navigable sections — Info (GPUs / VRAM / CPUs allocation), Schedule, Utilization, Output (stdout), and Error (stderr)
 - **Built-in log reader**: stream a job's stdout/stderr `tail` directly in Raycast, with copy actions for the file path and buffered output
 - **Improved usability**:
-  - Full-dataset search across **My Slurm Jobs**, **All Slurm Jobs**, and **HPC Util** (search now matches every loaded row, not just the visible page)
+  - Full search across **My Slurm Jobs**, **All Slurm Jobs**, and **HPC Util** (search now matches every loaded row, not just the visible page)
   - Pagination in the job lists so large, cluster-wide job sets render smoothly
   - Cluster filter dropdown to focus a view on a single active cluster
   - Clearer GPU display: typed GPU models (e.g. `Rtx Pro 6000`) and VRAM resolved from `AllocTRES`/`ReqTRES`
