@@ -83,7 +83,11 @@ export function latestGpu(samples: MetricSample[], index: number): GpuSample | n
 }
 
 // Average of `pick` over samples no older than `sinceMs` (use 0 for "all").
-export function windowAvg(samples: MetricSample[], sinceMs: number, pick: (s: MetricSample) => number | null): number | null {
+export function windowAvg(
+  samples: MetricSample[],
+  sinceMs: number,
+  pick: (s: MetricSample) => number | null,
+): number | null {
   let sum = 0;
   let n = 0;
   for (const s of samples) {

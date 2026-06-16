@@ -31,12 +31,7 @@ import {
   applyClusterFilter,
   partitionsByCluster,
 } from "./lib/components/ClusterFilter";
-import {
-  fitSubtitleToRow,
-  gpuLabelFromTres,
-  memFromTres,
-  stateColor,
-} from "./lib/format";
+import { fitSubtitleToRow, gpuLabelFromTres, memFromTres, stateColor } from "./lib/format";
 
 // Render jobs in bounded pages so a large queue (e.g. a big array-job fan-out)
 // can't instantiate enough List.Items at once to exhaust the Raycast worker heap.

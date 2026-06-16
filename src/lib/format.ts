@@ -172,9 +172,10 @@ export function buildJobTime(fields: Record<string, string>, nowMs: number): Job
   const running = (fields.JobState ?? "").toUpperCase().startsWith("RUNNING");
   const start = parseSlurmDateTime(fields.StartTime ?? "");
   const end = parseSlurmDateTime(fields.EndTime ?? "");
-  const limitSec = (fields.TimeLimit ?? "").trim().toUpperCase() === "UNLIMITED"
-    ? null
-    : parseSlurmDurationSeconds(fields.TimeLimit ?? "");
+  const limitSec =
+    (fields.TimeLimit ?? "").trim().toUpperCase() === "UNLIMITED"
+      ? null
+      : parseSlurmDurationSeconds(fields.TimeLimit ?? "");
 
   let elapsedSec: number | null = null;
   if (start) {
@@ -182,8 +183,7 @@ export function buildJobTime(fields: Record<string, string>, nowMs: number): Job
     else if (end) elapsedSec = Math.max(0, Math.round((end.getTime() - start.getTime()) / 1000));
   }
 
-  const remainingSec =
-    running && limitSec != null && elapsedSec != null ? Math.max(0, limitSec - elapsedSec) : null;
+  const remainingSec = running && limitSec != null && elapsedSec != null ? Math.max(0, limitSec - elapsedSec) : null;
   const progress =
     limitSec != null && limitSec > 0 && elapsedSec != null ? Math.max(0, Math.min(1, elapsedSec / limitSec)) : null;
 

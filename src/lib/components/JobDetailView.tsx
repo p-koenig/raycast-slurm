@@ -1,31 +1,14 @@
 import { useEffect, useState } from "react";
 import { Action, ActionPanel, List, Icon, Color } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
-import {
-  listPartitionActivity,
-  readLogTail,
-  showJob,
-  streamJobMetrics,
-  type PartitionActivity,
-  type QueueEntry,
-} from "../slurm";
-import {
-  type GpuSample,
-  type MetricSample,
-  gpuCount,
-  parseMetricStream,
-  windowAvg,
-  windowSeconds,
-} from "../metrics";
+import { readLogTail, showJob, streamJobMetrics } from "../slurm";
+import { type GpuSample, type MetricSample, gpuCount, parseMetricStream, windowAvg, windowSeconds } from "../metrics";
 import { DEMO_MODE, isDemoHost, mockMetricSample } from "../demo";
 import {
   buildJobTime,
-  formatBytesMB,
   formatDurationSeconds,
   formatShortDateTime,
-  formatSlurmDuration,
   gpuInfoFromTres,
-  gpuLabelFromTres,
   memFromTres,
   parseSlurmDateTime,
   prettifyGpuModel,
@@ -133,25 +116,18 @@ function InfoDetail({ fields, jobId }: { fields?: Record<string, string>; jobId:
 
 // Timing of the job, shaped by its state:
 //  • RUNNING  → progress bar toward the time limit, remaining, projected end.
-//  • PENDING  → queue position (jobs ahead, with a short list) + estimated start.
+//  • PENDING  → reason, estimated start, partition.
 //  • finished → total elapsed, start / end, time limit.
-function ScheduleDetail({ host, jobId, fields }: SectionProps) {
+function ScheduleDetail({ fields }: SectionProps) {
   const state = (fields?.JobState ?? "").toUpperCase();
   const pending = state.startsWith("PENDING");
   const running = state.startsWith("RUNNING");
-  const partition = fields?.Partition ?? "";
 
   // Tick once a second so a running job's progress / remaining advance live.
   const now = useNow(running);
-  // Only pending jobs need the partition's pending + running activity; gate it.
-  const { data: activity, isLoading: activityLoading } = useCachedPromise(
-    (h: string, p: string) => listPartitionActivity(h, p),
-    [host, partition],
-    { execute: pending && partition.length > 0 },
-  );
 
   if (!fields) return <List.Item.Detail isLoading markdown="" />;
-  if (pending) return <PendingSchedule fields={fields} jobId={jobId} activity={activity} loading={activityLoading} />;
+  if (pending) return <PendingSchedule fields={fields} />;
   return <TimedSchedule fields={fields} now={now} running={running} />;
 }
 
@@ -168,13 +144,13 @@ function UtilizationDetail({ host, jobId, fields, owned }: SectionProps) {
   if (!fields) return <List.Item.Detail isLoading markdown="" />;
   if (!running) {
     return (
-      <List.Item.Detail markdown={`# Utilization\n\nLive metrics are only available while the job is **running**.\n\nCurrent state: \`${state || "—"}\`.`} />
+      <List.Item.Detail
+        markdown={`# Utilization\n\nLive metrics are only available while the job is **running**.\n\nCurrent state: \`${state || "—"}\`.`}
+      />
     );
   }
   if (!owned) {
-    return (
-      <List.Item.Detail markdown={`# Utilization\n\nLive metrics are only available for **your own** jobs.`} />
-    );
+    return <List.Item.Detail markdown={`# Utilization\n\nLive metrics are only available for **your own** jobs.`} />;
   }
   return <LiveUtilization host={host} jobId={jobId} />;
 }
@@ -229,9 +205,7 @@ function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
   }, [host, jobId]);
 
   if (samples.length === 0) {
-    const md = error
-      ? `# Utilization\n\nCould not start the metrics stream:\n\n\`\`\`\n${error}\n\`\`\``
-      : "";
+    const md = error ? `# Utilization\n\nCould not start the metrics stream:\n\n\`\`\`\n${error}\n\`\`\`` : "";
     return <List.Item.Detail isLoading={!error} markdown={md} />;
   }
 
@@ -391,10 +365,7 @@ function LogItem({
       actions={
         <ActionPanel>
           {canRead && tail ? (
-            <Action.CopyToClipboard
-              title={stream === "stdout" ? "Copy Output" : "Copy Error Output"}
-              content={tail}
-            />
+            <Action.CopyToClipboard title={stream === "stdout" ? "Copy Output" : "Copy Error Output"} content={tail} />
           ) : null}
           {path ? <Action.CopyToClipboard title="Copy File Path" content={path} /> : null}
           {canRead ? <Action title="Refresh" icon={Icon.ArrowClockwise} onAction={() => revalidate()} /> : null}
@@ -441,12 +412,12 @@ function TimedSchedule({ fields, now, running }: { fields: Record<string, string
     );
   }
   if (t.remainingSec != null) {
-    rows.push(<List.Item.Detail.Metadata.Label title="Remaining" text={formatDurationSeconds(t.remainingSec)} key="rem" />);
+    rows.push(
+      <List.Item.Detail.Metadata.Label title="Remaining" text={formatDurationSeconds(t.remainingSec)} key="rem" />,
+    );
   }
   rows.push(<List.Item.Detail.Metadata.Label title="Started" text={t.started} key="started" />);
-  rows.push(
-    <List.Item.Detail.Metadata.Label title={running ? "Ends (est.)" : "Ended"} text={t.ends} key="ends" />,
-  );
+  rows.push(<List.Item.Detail.Metadata.Label title={running ? "Ends (est.)" : "Ended"} text={t.ends} key="ends" />);
   rows.push(
     <List.Item.Detail.Metadata.Label
       title="Time Limit"
@@ -458,27 +429,19 @@ function TimedSchedule({ fields, now, running }: { fields: Record<string, string
   return <List.Item.Detail metadata={<List.Item.Detail.Metadata>{rows}</List.Item.Detail.Metadata>} />;
 }
 
-// PENDING: when Slurm expects ours to start, plus what stands between us and the
-// resources — the pending jobs scheduled ahead of ours, and the running jobs
-// currently holding the partition (with how long until each frees up).
-function PendingSchedule(props: {
-  fields: Record<string, string>;
-  jobId: string;
-  activity?: PartitionActivity;
-  loading: boolean;
-}) {
-  const { fields, jobId, activity, loading } = props;
+// PENDING: the reason Slurm is holding the job, when it expects ours to start,
+// and the partition it's queued on.
+//
+// NOTE: the "Pending Jobs Ahead" list (the partition queue scheduled before this
+// job) was removed for now — it wasn't reporting the queue position correctly.
+function PendingSchedule({ fields }: { fields: Record<string, string> }) {
   const partition = fields.Partition ?? "";
   const reason = shortReason(fields.Reason) || "—";
 
   const startDate = parseSlurmDateTime(fields.StartTime ?? "");
-  const estStart = startDate ? `${formatShortDateTime(fields.StartTime)} · ${relativeFromNow(startDate)}` : "not yet estimated";
-
-  // Our own row marks the cut: everything before it is ahead. If we can't find
-  // ourselves (squeue race / partition mismatch) treat the whole list as ahead.
-  const pendingAll = activity?.pending ?? [];
-  const idx = pendingAll.findIndex((j) => j.jobId === jobId);
-  const pendingAhead = idx >= 0 ? pendingAll.slice(0, idx) : pendingAll;
+  const estStart = startDate
+    ? `${formatShortDateTime(fields.StartTime)} · ${relativeFromNow(startDate)}`
+    : "not yet estimated";
 
   const rows = [
     <List.Item.Detail.Metadata.TagList title="Status" key="status">
@@ -487,62 +450,9 @@ function PendingSchedule(props: {
     <List.Item.Detail.Metadata.Label title="Reason" text={reason} icon={Icon.QuestionMark} key="reason" />,
     <List.Item.Detail.Metadata.Label title="Est. Start" text={estStart} icon={Icon.Clock} key="start" />,
     <List.Item.Detail.Metadata.Label title="Partition" text={partition || "—"} icon={Icon.HardDrive} key="part" />,
-    <List.Item.Detail.Metadata.Separator key="sep-pend" />,
-    ...jobAheadRows("Pending Jobs Ahead", "pend", pendingAhead, loading),
   ];
 
   return <List.Item.Detail metadata={<List.Item.Detail.Metadata>{rows}</List.Item.Detail.Metadata>} />;
-}
-
-const AHEAD_PREVIEW = 8;
-
-// A count header followed by two metadata rows per job:
-//   • identity   — Job ID (row title) with the job name as plain text beside it.
-//   • resources  — user, requested wallclock (%l), GPU / CPU / RAM pills.
-// (Raycast metadata rows have no inline rich text, so the Job ID lives in the
-// `title` slot — the strongest emphasis available — and the name is plain `text`.)
-function jobAheadRows(title: string, keyPrefix: string, jobs: QueueEntry[], loading: boolean) {
-  const out = [
-    <List.Item.Detail.Metadata.Label
-      title={title}
-      text={loading ? "…" : jobs.length === 0 ? "none" : String(jobs.length)}
-      icon={Icon.Layers}
-      key={`${keyPrefix}-count`}
-    />,
-  ];
-  if (loading) return out;
-  jobs.slice(0, AHEAD_PREVIEW).forEach((j, i) => {
-    const reqTime = formatSlurmDuration(j.timeLimit);
-    out.push(
-      <List.Item.Detail.Metadata.Label title={j.jobId} text={j.name || "—"} key={`${keyPrefix}-${i}-id`} />,
-      <List.Item.Detail.Metadata.TagList title="" key={`${keyPrefix}-${i}-res`}>
-        <List.Item.Detail.Metadata.TagList.Item text={j.user || "—"} color={Color.Blue} icon={Icon.Person} />
-        {reqTime ? (
-          <List.Item.Detail.Metadata.TagList.Item text={reqTime} color={Color.Yellow} icon={Icon.Clock} />
-        ) : null}
-        <List.Item.Detail.Metadata.TagList.Item text={gpuLabelFromTres(j.tres) ?? "No GPU"} color={Color.SecondaryText} />
-        <List.Item.Detail.Metadata.TagList.Item text={`${j.cpus || "?"} CPU`} color={Color.SecondaryText} />
-        <List.Item.Detail.Metadata.TagList.Item
-          text={memFromTres(j.tres) ?? formatReqMem(j.mem)}
-          color={Color.SecondaryText}
-        />
-      </List.Item.Detail.Metadata.TagList>,
-    );
-  });
-  const extra = jobs.length - Math.min(jobs.length, AHEAD_PREVIEW);
-  if (extra > 0) out.push(<List.Item.Detail.Metadata.Label title="⋯" text={`and ${extra} more`} key={`${keyPrefix}-more`} />);
-  return out;
-}
-
-// squeue's %m (requested memory) comes either unit-suffixed ("64G") or as a
-// bare MB count; normalise both to "64 GB".
-function formatReqMem(m: string): string {
-  const v = (m ?? "").trim();
-  if (!v || v === "0" || v === "N/A") return "—";
-  const withUnit = /^(\d+(?:\.\d+)?)\s*([KMGT])/i.exec(v);
-  if (withUnit) return `${withUnit[1]} ${withUnit[2].toUpperCase()}B`;
-  const mb = Number(v);
-  return Number.isFinite(mb) ? formatBytesMB(mb) : v;
 }
 
 // Wall-clock that re-renders once a second while `active`; frozen otherwise so

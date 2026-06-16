@@ -1075,7 +1075,17 @@ function buildPartitionActivityResponse(jobs: MockJob[], partition: string): str
   // Running jobs are allocated, so their tres-alloc carries the full TRES.
   const runAlloc = running.map((j) => j.jobId.padEnd(64) + j.tres);
 
-  return [pendPrimary.join("\n"), "---PALLOC---", "", "---RUN---", runPrimary.join("\n"), "---RALLOC---", runAlloc.join("\n")].join("\n") + "\n";
+  return (
+    [
+      pendPrimary.join("\n"),
+      "---PALLOC---",
+      "",
+      "---RUN---",
+      runPrimary.join("\n"),
+      "---RALLOC---",
+      runAlloc.join("\n"),
+    ].join("\n") + "\n"
+  );
 }
 
 function tresMem(tres: string): string {
