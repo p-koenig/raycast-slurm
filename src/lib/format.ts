@@ -32,9 +32,12 @@ export function parseSlurmDateTime(s: string): Date | null {
 export function formatSlurmDateTime(s: string): string {
   const v = (s ?? "").trim();
   if (!v || v === "Unknown" || v === "N/A" || v === "None") return "—";
-  const date = parseSlurmDateTime(v);
-  if (!date) return v;
-  const absolute = date.toLocaleString("en-GB", {
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/.exec(v);
+  if (!m) return v;
+  const [, y, mo, d, hh, mm, ss] = m;
+  const date = new Date(Number(y), Number(mo) - 1, Number(d), Number(hh), Number(mm), Number(ss));
+  if (Number.isNaN(date.getTime())) return v;
+  const absolute = date.toLocaleString(undefined, {
     weekday: "short",
     day: "numeric",
     month: "short",

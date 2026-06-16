@@ -11,7 +11,7 @@
   - Cluster filter dropdown to focus a view on a single active cluster
   - Clearer GPU display: typed GPU models (e.g. `Rtx Pro 6000`) and VRAM resolved from `AllocTRES`/`ReqTRES`
 
-## [Initial Version] - {PR_MERGE_DATE}
+## [Initial Version] - 2026-06-11
 
 - First public release of the Slurm extension for Raycast
 - Manage Slurm jobs across multiple clusters via SSH
