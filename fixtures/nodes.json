@@ -1,0 +1,775 @@
+{
+  "cases": [
+    {
+      "cmd": "scontrol show node --oneliner",
+      "expected": [
+        {
+          "allocMemoryMB": 655360,
+          "allocTres": "cpu=96,mem=640G,gres/gpu=7",
+          "cpuAlloc": 96,
+          "cpuLoad": 72.4,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 358400,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:7",
+          "name": "gpu01",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 604160,
+          "allocTres": "cpu=96,mem=600G,gres/gpu=7",
+          "cpuAlloc": 96,
+          "cpuLoad": 68.2,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 409600,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:7",
+          "name": "gpu02",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 808960,
+          "allocTres": "cpu=128,mem=800G,gres/gpu=8",
+          "cpuAlloc": 128,
+          "cpuLoad": 124.5,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 204800,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:8",
+          "name": "gpu03",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "ALLOCATED"
+        },
+        {
+          "allocMemoryMB": 399360,
+          "allocTres": "cpu=64,mem=400G,gres/gpu=4",
+          "cpuAlloc": 64,
+          "cpuLoad": 42.1,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 614400,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:4",
+          "name": "gpu04",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.04,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 1010688,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:0",
+          "name": "gpu05",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.02,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 1015040,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:0",
+          "name": "gpu06",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 296960,
+          "allocTres": "cpu=32,mem=290G,gres/gpu=2",
+          "cpuAlloc": 32,
+          "cpuLoad": 15.8,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 716800,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:2",
+          "name": "gpu07",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.01,
+          "cpuTot": 128,
+          "features": "h100,nvlink,sxm5",
+          "freeMemoryMB": 1015808,
+          "gres": "gpu:h100:8",
+          "gresUsed": "gpu:h100:0",
+          "name": "gpu08",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 1015808,
+          "reason": "kernel upgrade pending",
+          "state": "DRAINED"
+        },
+        {
+          "allocMemoryMB": 307200,
+          "allocTres": "cpu=32,mem=300G,gres/gpu=2",
+          "cpuAlloc": 32,
+          "cpuLoad": 28.3,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 204800,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:2",
+          "name": "gpu09",
+          "partitions": [
+            "gpu",
+            "gpu-long",
+            "debug"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 460800,
+          "allocTres": "cpu=64,mem=450G,gres/gpu=4",
+          "cpuAlloc": 64,
+          "cpuLoad": 62.4,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 51200,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:4",
+          "name": "gpu10",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "ALLOCATED"
+        },
+        {
+          "allocMemoryMB": 153600,
+          "allocTres": "cpu=16,mem=150G,gres/gpu=1",
+          "cpuAlloc": 16,
+          "cpuLoad": 14.2,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 358400,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:1",
+          "name": "gpu11",
+          "partitions": [
+            "gpu",
+            "gpu-long",
+            "debug"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 358400,
+          "allocTres": "cpu=48,mem=350G,gres/gpu=3",
+          "cpuAlloc": 48,
+          "cpuLoad": 47.8,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 153600,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:3",
+          "name": "gpu12",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.05,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 508928,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:0",
+          "name": "gpu13",
+          "partitions": [
+            "gpu",
+            "gpu-long",
+            "debug"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 102400,
+          "allocTres": "cpu=8,mem=100G,gres/gpu=2",
+          "cpuAlloc": 8,
+          "cpuLoad": 8.4,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 409600,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:2",
+          "name": "gpu14",
+          "partitions": [
+            "gpu",
+            "debug"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 491520,
+          "allocTres": "cpu=64,mem=480G,gres/gpu=4",
+          "cpuAlloc": 64,
+          "cpuLoad": 63.1,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 20480,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:4",
+          "name": "gpu15",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "None",
+          "state": "ALLOCATED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": null,
+          "cpuTot": 64,
+          "features": "a100,nvlink",
+          "freeMemoryMB": 0,
+          "gres": "gpu:a100:4",
+          "gresUsed": "gpu:a100:0",
+          "name": "gpu16",
+          "partitions": [
+            "gpu",
+            "gpu-long"
+          ],
+          "realMemoryMB": 510976,
+          "reason": "hardware fault GPU0",
+          "state": "DOWN"
+        }
+      ],
+      "host": "phoenix",
+      "input": "NodeName=gpu01 State=MIXED Partitions=gpu,gpu-long CPULoad=72.40 CPUTot=128 CPUAlloc=96 RealMemory=1015808 FreeMem=358400 AllocMem=655360 Gres=gpu:h100:8 GresUsed=gpu:h100:7 AllocTRES=cpu=96,mem=640G,gres/gpu=7 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu02 State=MIXED Partitions=gpu,gpu-long CPULoad=68.20 CPUTot=128 CPUAlloc=96 RealMemory=1015808 FreeMem=409600 AllocMem=604160 Gres=gpu:h100:8 GresUsed=gpu:h100:7 AllocTRES=cpu=96,mem=600G,gres/gpu=7 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu03 State=ALLOCATED Partitions=gpu,gpu-long CPULoad=124.50 CPUTot=128 CPUAlloc=128 RealMemory=1015808 FreeMem=204800 AllocMem=808960 Gres=gpu:h100:8 GresUsed=gpu:h100:8 AllocTRES=cpu=128,mem=800G,gres/gpu=8 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu04 State=MIXED Partitions=gpu,gpu-long CPULoad=42.10 CPUTot=128 CPUAlloc=64 RealMemory=1015808 FreeMem=614400 AllocMem=399360 Gres=gpu:h100:8 GresUsed=gpu:h100:4 AllocTRES=cpu=64,mem=400G,gres/gpu=4 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu05 State=IDLE Partitions=gpu,gpu-long CPULoad=0.04 CPUTot=128 CPUAlloc=0 RealMemory=1015808 FreeMem=1010688 AllocMem=0 Gres=gpu:h100:8 GresUsed=gpu:h100:0 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu06 State=IDLE Partitions=gpu,gpu-long CPULoad=0.02 CPUTot=128 CPUAlloc=0 RealMemory=1015808 FreeMem=1015040 AllocMem=0 Gres=gpu:h100:8 GresUsed=gpu:h100:0 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu07 State=MIXED Partitions=gpu,gpu-long CPULoad=15.80 CPUTot=128 CPUAlloc=32 RealMemory=1015808 FreeMem=716800 AllocMem=296960 Gres=gpu:h100:8 GresUsed=gpu:h100:2 AllocTRES=cpu=32,mem=290G,gres/gpu=2 AvailableFeatures=h100,nvlink,sxm5 Reason=\"None\"\nNodeName=gpu08 State=DRAINED Partitions=gpu,gpu-long CPULoad=0.01 CPUTot=128 CPUAlloc=0 RealMemory=1015808 FreeMem=1015808 AllocMem=0 Gres=gpu:h100:8 GresUsed=gpu:h100:0 AvailableFeatures=h100,nvlink,sxm5 Reason=\"kernel upgrade pending\"\nNodeName=gpu09 State=MIXED Partitions=gpu,gpu-long,debug CPULoad=28.30 CPUTot=64 CPUAlloc=32 RealMemory=510976 FreeMem=204800 AllocMem=307200 Gres=gpu:a100:4 GresUsed=gpu:a100:2 AllocTRES=cpu=32,mem=300G,gres/gpu=2 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu10 State=ALLOCATED Partitions=gpu,gpu-long CPULoad=62.40 CPUTot=64 CPUAlloc=64 RealMemory=510976 FreeMem=51200 AllocMem=460800 Gres=gpu:a100:4 GresUsed=gpu:a100:4 AllocTRES=cpu=64,mem=450G,gres/gpu=4 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu11 State=MIXED Partitions=gpu,gpu-long,debug CPULoad=14.20 CPUTot=64 CPUAlloc=16 RealMemory=510976 FreeMem=358400 AllocMem=153600 Gres=gpu:a100:4 GresUsed=gpu:a100:1 AllocTRES=cpu=16,mem=150G,gres/gpu=1 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu12 State=MIXED Partitions=gpu,gpu-long CPULoad=47.80 CPUTot=64 CPUAlloc=48 RealMemory=510976 FreeMem=153600 AllocMem=358400 Gres=gpu:a100:4 GresUsed=gpu:a100:3 AllocTRES=cpu=48,mem=350G,gres/gpu=3 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu13 State=IDLE Partitions=gpu,gpu-long,debug CPULoad=0.05 CPUTot=64 CPUAlloc=0 RealMemory=510976 FreeMem=508928 AllocMem=0 Gres=gpu:a100:4 GresUsed=gpu:a100:0 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu14 State=MIXED Partitions=gpu,debug CPULoad=8.40 CPUTot=64 CPUAlloc=8 RealMemory=510976 FreeMem=409600 AllocMem=102400 Gres=gpu:a100:4 GresUsed=gpu:a100:2 AllocTRES=cpu=8,mem=100G,gres/gpu=2 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu15 State=ALLOCATED Partitions=gpu,gpu-long CPULoad=63.10 CPUTot=64 CPUAlloc=64 RealMemory=510976 FreeMem=20480 AllocMem=491520 Gres=gpu:a100:4 GresUsed=gpu:a100:4 AllocTRES=cpu=64,mem=480G,gres/gpu=4 AvailableFeatures=a100,nvlink Reason=\"None\"\nNodeName=gpu16 State=DOWN Partitions=gpu,gpu-long CPULoad=N/A CPUTot=64 CPUAlloc=0 RealMemory=510976 FreeMem=0 AllocMem=0 Gres=gpu:a100:4 GresUsed=gpu:a100:0 AvailableFeatures=a100,nvlink Reason=\"hardware fault GPU0\"\n",
+      "name": "phoenix-nodes"
+    },
+    {
+      "cmd": "scontrol show node --oneliner",
+      "expected": [
+        {
+          "allocMemoryMB": 196608,
+          "allocTres": "cpu=48,mem=192G",
+          "cpuAlloc": 48,
+          "cpuLoad": 47.8,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 51200,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu01",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "ALLOCATED"
+        },
+        {
+          "allocMemoryMB": 131072,
+          "allocTres": "cpu=32,mem=128G",
+          "cpuAlloc": 32,
+          "cpuLoad": 31.4,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 128000,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu02",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 131072,
+          "allocTres": "cpu=32,mem=128G",
+          "cpuAlloc": 32,
+          "cpuLoad": 28.9,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 124928,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu03",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 98304,
+          "allocTres": "cpu=32,mem=96G",
+          "cpuAlloc": 32,
+          "cpuLoad": 30.2,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 158720,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu04",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 98304,
+          "allocTres": "cpu=24,mem=96G",
+          "cpuAlloc": 24,
+          "cpuLoad": 23.1,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 158720,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu05",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.12,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 254976,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu06",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 65536,
+          "allocTres": "cpu=16,mem=64G",
+          "cpuAlloc": 16,
+          "cpuLoad": 15.8,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 191488,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu07",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 65536,
+          "allocTres": "cpu=16,mem=64G",
+          "cpuAlloc": 16,
+          "cpuLoad": 15.4,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 191488,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu08",
+          "partitions": [
+            "cpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.08,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 255488,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu09",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.03,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 256000,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu10",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 32768,
+          "allocTres": "cpu=8,mem=32G",
+          "cpuAlloc": 8,
+          "cpuLoad": 7.6,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 224256,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu11",
+          "partitions": [
+            "cpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.02,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 256512,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu12",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 32768,
+          "allocTres": "cpu=8,mem=32G",
+          "cpuAlloc": 8,
+          "cpuLoad": 7.9,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 224256,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu13",
+          "partitions": [
+            "cpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "COMPLETING"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.05,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 256512,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu14",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.04,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 256512,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu15",
+          "partitions": [
+            "cpu",
+            "cpu-long"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.01,
+          "cpuTot": 64,
+          "features": "epyc,zen4",
+          "freeMemoryMB": 257024,
+          "gres": "",
+          "gresUsed": "",
+          "name": "cpu16",
+          "partitions": [
+            "cpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "scheduled maintenance",
+          "state": "DRAINED"
+        },
+        {
+          "allocMemoryMB": 98304,
+          "allocTres": "cpu=16,mem=96G,gres/gpu=2",
+          "cpuAlloc": 16,
+          "cpuLoad": 14.2,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 158720,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:2",
+          "name": "gpu01",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "ALLOCATED"
+        },
+        {
+          "allocMemoryMB": 65536,
+          "allocTres": "cpu=16,mem=64G,gres/gpu=1",
+          "cpuAlloc": 16,
+          "cpuLoad": 12.4,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 191488,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:1",
+          "name": "gpu02",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 49152,
+          "allocTres": "cpu=8,mem=48G,gres/gpu=1",
+          "cpuAlloc": 8,
+          "cpuLoad": 6.8,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 207872,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:1",
+          "name": "gpu03",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.03,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 256512,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:0",
+          "name": "gpu04",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 32768,
+          "allocTres": "cpu=4,mem=32G,gres/gpu=1",
+          "cpuAlloc": 4,
+          "cpuLoad": 3.6,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 224256,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:1",
+          "name": "gpu05",
+          "partitions": [
+            "gpu",
+            "dev"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "MIXED"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.02,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 256512,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:0",
+          "name": "gpu06",
+          "partitions": [
+            "gpu",
+            "dev"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.01,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 256512,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:0",
+          "name": "gpu07",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        },
+        {
+          "allocMemoryMB": 0,
+          "allocTres": "",
+          "cpuAlloc": 0,
+          "cpuLoad": 0.01,
+          "cpuTot": 32,
+          "features": "l40s,ada",
+          "freeMemoryMB": 256512,
+          "gres": "gpu:l40s:2",
+          "gresUsed": "gpu:l40s:0",
+          "name": "gpu08",
+          "partitions": [
+            "gpu"
+          ],
+          "realMemoryMB": 257024,
+          "reason": "None",
+          "state": "IDLE"
+        }
+      ],
+      "host": "nimbus",
+      "input": "NodeName=cpu01 State=ALLOCATED Partitions=cpu,cpu-long CPULoad=47.80 CPUTot=64 CPUAlloc=48 RealMemory=257024 FreeMem=51200 AllocMem=196608 AllocTRES=cpu=48,mem=192G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu02 State=MIXED Partitions=cpu,cpu-long CPULoad=31.40 CPUTot=64 CPUAlloc=32 RealMemory=257024 FreeMem=128000 AllocMem=131072 AllocTRES=cpu=32,mem=128G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu03 State=MIXED Partitions=cpu,cpu-long CPULoad=28.90 CPUTot=64 CPUAlloc=32 RealMemory=257024 FreeMem=124928 AllocMem=131072 AllocTRES=cpu=32,mem=128G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu04 State=MIXED Partitions=cpu,cpu-long CPULoad=30.20 CPUTot=64 CPUAlloc=32 RealMemory=257024 FreeMem=158720 AllocMem=98304 AllocTRES=cpu=32,mem=96G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu05 State=MIXED Partitions=cpu,cpu-long CPULoad=23.10 CPUTot=64 CPUAlloc=24 RealMemory=257024 FreeMem=158720 AllocMem=98304 AllocTRES=cpu=24,mem=96G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu06 State=IDLE Partitions=cpu,cpu-long CPULoad=0.12 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=254976 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu07 State=MIXED Partitions=cpu,cpu-long CPULoad=15.80 CPUTot=64 CPUAlloc=16 RealMemory=257024 FreeMem=191488 AllocMem=65536 AllocTRES=cpu=16,mem=64G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu08 State=MIXED Partitions=cpu CPULoad=15.40 CPUTot=64 CPUAlloc=16 RealMemory=257024 FreeMem=191488 AllocMem=65536 AllocTRES=cpu=16,mem=64G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu09 State=IDLE Partitions=cpu,cpu-long CPULoad=0.08 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=255488 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu10 State=IDLE Partitions=cpu,cpu-long CPULoad=0.03 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=256000 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu11 State=MIXED Partitions=cpu CPULoad=7.60 CPUTot=64 CPUAlloc=8 RealMemory=257024 FreeMem=224256 AllocMem=32768 AllocTRES=cpu=8,mem=32G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu12 State=IDLE Partitions=cpu,cpu-long CPULoad=0.02 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu13 State=COMPLETING Partitions=cpu CPULoad=7.90 CPUTot=64 CPUAlloc=8 RealMemory=257024 FreeMem=224256 AllocMem=32768 AllocTRES=cpu=8,mem=32G AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu14 State=IDLE Partitions=cpu,cpu-long CPULoad=0.05 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu15 State=IDLE Partitions=cpu,cpu-long CPULoad=0.04 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"None\"\nNodeName=cpu16 State=DRAINED Partitions=cpu CPULoad=0.01 CPUTot=64 CPUAlloc=0 RealMemory=257024 FreeMem=257024 AllocMem=0 AvailableFeatures=epyc,zen4 Reason=\"scheduled maintenance\"\nNodeName=gpu01 State=ALLOCATED Partitions=gpu CPULoad=14.20 CPUTot=32 CPUAlloc=16 RealMemory=257024 FreeMem=158720 AllocMem=98304 Gres=gpu:l40s:2 GresUsed=gpu:l40s:2 AllocTRES=cpu=16,mem=96G,gres/gpu=2 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu02 State=MIXED Partitions=gpu CPULoad=12.40 CPUTot=32 CPUAlloc=16 RealMemory=257024 FreeMem=191488 AllocMem=65536 Gres=gpu:l40s:2 GresUsed=gpu:l40s:1 AllocTRES=cpu=16,mem=64G,gres/gpu=1 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu03 State=MIXED Partitions=gpu CPULoad=6.80 CPUTot=32 CPUAlloc=8 RealMemory=257024 FreeMem=207872 AllocMem=49152 Gres=gpu:l40s:2 GresUsed=gpu:l40s:1 AllocTRES=cpu=8,mem=48G,gres/gpu=1 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu04 State=IDLE Partitions=gpu CPULoad=0.03 CPUTot=32 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 Gres=gpu:l40s:2 GresUsed=gpu:l40s:0 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu05 State=MIXED Partitions=gpu,dev CPULoad=3.60 CPUTot=32 CPUAlloc=4 RealMemory=257024 FreeMem=224256 AllocMem=32768 Gres=gpu:l40s:2 GresUsed=gpu:l40s:1 AllocTRES=cpu=4,mem=32G,gres/gpu=1 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu06 State=IDLE Partitions=gpu,dev CPULoad=0.02 CPUTot=32 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 Gres=gpu:l40s:2 GresUsed=gpu:l40s:0 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu07 State=IDLE Partitions=gpu CPULoad=0.01 CPUTot=32 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 Gres=gpu:l40s:2 GresUsed=gpu:l40s:0 AvailableFeatures=l40s,ada Reason=\"None\"\nNodeName=gpu08 State=IDLE Partitions=gpu CPULoad=0.01 CPUTot=32 CPUAlloc=0 RealMemory=257024 FreeMem=256512 AllocMem=0 Gres=gpu:l40s:2 GresUsed=gpu:l40s:0 AvailableFeatures=l40s,ada Reason=\"None\"\n",
+      "name": "nimbus-nodes"
+    }
+  ],
+  "kind": "nodes",
+  "version": 1
+}

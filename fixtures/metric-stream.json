@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "rest": "T 1767225602000\nG 0, NVIDIA A100-SXM4-80GB, 90, 61440, 81920\n",
+        "samples": [
+          {
+            "cpu": 62.5,
+            "gpus": [
+              {
+                "index": 0,
+                "memPct": 75,
+                "memTotalMiB": 81920,
+                "name": "NVIDIA A100-SXM4-80GB",
+                "util": 94
+              },
+              {
+                "index": 1,
+                "memPct": 60,
+                "memTotalMiB": 81920,
+                "name": "NVIDIA A100-SXM4-80GB",
+                "util": 88
+              }
+            ],
+            "ram": 50,
+            "t": 1767225600000
+          },
+          {
+            "cpu": 71.3,
+            "gpus": [
+              {
+                "index": 0,
+                "memPct": 77.999267578125,
+                "memTotalMiB": 81920,
+                "name": "NVIDIA A100-SXM4-80GB",
+                "util": 97
+              },
+              {
+                "index": 1,
+                "memPct": 50,
+                "memTotalMiB": 81920,
+                "name": "NVIDIA A100-SXM4-80GB",
+                "util": 91
+              }
+            ],
+            "ram": 51.5625,
+            "t": 1767225601000
+          }
+        ]
+      },
+      "input": "T 1767225600000\nG 0, NVIDIA A100-SXM4-80GB, 94, 61440, 81920\nG 1, NVIDIA A100-SXM4-80GB, 88, 49152, 81920\nC 62.5 34359738368 68719476736\nE\nT 1767225601000\nG 0, NVIDIA A100-SXM4-80GB, 97, 63897, 81920\nG 1, NVIDIA A100-SXM4-80GB, 91, 40960, 81920\nC 71.3 35433480192 68719476736\nE\nT 1767225602000\nG 0, NVIDIA A100-SXM4-80GB, 90, 61440, 81920\n",
+      "name": "two-complete-ticks-plus-partial",
+      "note": "trailing incomplete tick must be carried in `rest`, not parsed"
+    },
+    {
+      "expected": {
+        "rest": "",
+        "samples": [
+          {
+            "cpu": null,
+            "gpus": [
+              {
+                "index": 0,
+                "memPct": 74.99969347343641,
+                "memTotalMiB": 81559,
+                "name": "NVIDIA H100 80GB HBM3",
+                "util": 97
+              },
+              {
+                "index": 1,
+                "memPct": 9.998896504371068,
+                "memTotalMiB": 81559,
+                "name": "NVIDIA H100 80GB HBM3",
+                "util": 12
+              },
+              {
+                "index": 2,
+                "memPct": 49.99938694687282,
+                "memTotalMiB": 81559,
+                "name": "NVIDIA H100 80GB HBM3",
+                "util": 55
+              }
+            ],
+            "ram": null,
+            "t": 1767225610000
+          }
+        ]
+      },
+      "input": "T 1767225610000\nG 2, NVIDIA H100 80GB HBM3, 55, 40779, 81559\nG 0, NVIDIA H100 80GB HBM3, 97, 61169, 81559\nG 1, NVIDIA H100 80GB HBM3, 12, 8155, 81559\nG 3, NVIDIA H100 80GB HBM3, 40, 100, 0\nG x, NVIDIA H100 80GB HBM3, 40, 100, 81559\nG 4, NVIDIA H100 80GB HBM3, [N/A], 100, 81559\nC - 1024 0\nE\n",
+      "name": "unsorted-gpus-and-degenerate-fields",
+      "note": "gpus sorted by index per tick; malformed G lines dropped; `-` cpu and zero memMax become null"
+    },
+    {
+      "expected": {
+        "rest": "",
+        "samples": [
+          {
+            "cpu": 87,
+            "gpus": [],
+            "ram": 50,
+            "t": 1767225620000
+          }
+        ]
+      },
+      "input": "T 1767225620000\nC 87.0 17179869184 34359738368\nE\n",
+      "name": "cpu-only-tick-no-gpus",
+      "note": "CPU-only job: nvidia-smi emits nothing, gpus is empty"
+    },
+    {
+      "expected": {
+        "rest": "T 1767225630000\nG 0, NVIDIA L40S, 66, 23034, 46068\nC 42.0 1024 4096",
+        "samples": []
+      },
+      "input": "T 1767225630000\nG 0, NVIDIA L40S, 66, 23034, 46068\nC 42.0 1024 4096",
+      "name": "no-sentinel-yet",
+      "note": "no `E` line: zero samples, whole buffer carried as rest"
+    }
+  ],
+  "kind": "metric-stream",
+  "version": 1
+}

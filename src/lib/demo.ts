@@ -25,6 +25,7 @@
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
+import { expandHostlist } from "./hostlist";
 import type { Host } from "./ssh-config";
 import type { MetricSample } from "./metrics";
 
@@ -42,6 +43,19 @@ function detectDemoMode(): boolean {
 }
 
 export const DEMO_MODE = detectDemoMode();
+
+// ---------- golden-fixture export hook (inert unless RAYCAST_SLURM_FIXTURE_LOG=1) ----------
+// scripts/export-fixtures.ts drives the real lib functions in demo mode and needs
+// both the exact wire input and the exact command string the lib issued, without
+// re-deriving either. mockRunSsh appends them here. The same gate freezes the
+// demo clock: jobDetail derives SubmitTime/StartTime/EndTime from Date.now(), so
+// without this the exported fixtures would differ on every run.
+const FIXTURE_LOG = process.env.RAYCAST_SLURM_FIXTURE_LOG === "1";
+const FIXTURE_NOW_MS = 1_767_225_600_000; // 2026-01-01T00:00:00Z, fixed
+export const mockCallLog: { host: string; cmd: string; out: string }[] = [];
+function demoNow(): number {
+  return FIXTURE_LOG ? FIXTURE_NOW_MS : Date.now();
+}
 
 export const DEMO_USER = "r.shaw";
 
@@ -157,6 +171,22 @@ const PHOENIX_JOBS: MockJob[] = [
     user: DEMO_USER,
     tres: "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1",
   },
+  // A running array task: its `%i` keeps the "_7" suffix, but squeue keys its
+  // AllocTRES under the reconstructed base_task notation — the case that used to
+  // drop the GPU tag on the node drill-down (see gpu-tag-squeue-formats note).
+  {
+    jobId: "145843_7",
+    partition: "gpu",
+    name: "hp_sweep",
+    state: "RUNNING",
+    elapsed: "1:03:11",
+    timeLimit: "8:00:00",
+    nodes: "1",
+    cpus: "8",
+    reasonOrNodeList: "gpu14",
+    user: DEMO_USER,
+    tres: "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+  },
   {
     jobId: "145847",
     partition: "gpu",
@@ -182,6 +212,23 @@ const PHOENIX_JOBS: MockJob[] = [
     reasonOrNodeList: "(Priority)",
     user: DEMO_USER,
     tres: "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1",
+  },
+  // A still-pending array, throttled to one task at a time: its `%i` is the
+  // bracketed range `145851_[3-64%1]`. scontrol's job-id parser rejects that
+  // syntax, so the detail view must drill down via the base array id 145851
+  // (see scontrolJobId) — this fixture exercises that path end to end.
+  {
+    jobId: "145851_[3-64%1]",
+    partition: "gpu",
+    name: "grid_search",
+    state: "PENDING",
+    elapsed: "0:00",
+    timeLimit: "4:00:00",
+    nodes: "1",
+    cpus: "8",
+    reasonOrNodeList: "(JobArrayTaskLimit)",
+    user: DEMO_USER,
+    tres: "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
   },
   {
     jobId: "145855",
@@ -1016,9 +1063,24 @@ function jobToAllRow(j: MockJob): string {
   ].join("|");
 }
 
+// Split a mock job id into the (ArrayJobID, ArrayTaskID) columns real squeue
+// prints for `-O ArrayJobID,ArrayTaskID`, which parseAllocTres rebuilds the `%i`
+// key from: a running array task "145860_7" → ["145860", "7"], a pending range
+// "145860_[8-20%2]" → ["145860", "8-20%2"], a plain job "145789" →
+// ["145789", "N/A"].
+function jobIdToArrayCols(jobId: string): [string, string] {
+  const running = /^(\d+)_(\d+)$/.exec(jobId);
+  if (running) return [running[1], running[2]];
+  const range = /^(\d+)_\[(.+)\]$/.exec(jobId);
+  if (range) return [range[1], range[2]];
+  return [jobId, "N/A"];
+}
+
 function jobToAllocRow(j: MockJob): string {
-  // squeue -O "JobID:64,tres-alloc:512" — left-padded fixed-width columns.
-  return j.jobId.padEnd(64) + j.tres;
+  // squeue -O "ArrayJobID:24,ArrayTaskID:24,tres-alloc:512" — fixed-width columns
+  // (widths must match ALLOC_JOBID_WIDTH / ALLOC_TASKID_WIDTH in slurm.ts).
+  const [arrayJobId, arrayTaskId] = jobIdToArrayCols(j.jobId);
+  return arrayJobId.padEnd(24) + arrayTaskId.padEnd(24) + j.tres;
 }
 
 function nodeToLine(n: MockNode): string {
@@ -1073,7 +1135,7 @@ function buildPartitionActivityResponse(jobs: MockJob[], partition: string): str
     [j.jobId, j.name, j.user, j.cpus, tresMem(j.tres), j.timeLimit, timeLeft(j), tresGpu(j.tres)].join("|"),
   );
   // Running jobs are allocated, so their tres-alloc carries the full TRES.
-  const runAlloc = running.map((j) => j.jobId.padEnd(64) + j.tres);
+  const runAlloc = running.map(jobToAllocRow);
 
   return (
     [
@@ -1086,6 +1148,20 @@ function buildPartitionActivityResponse(jobs: MockJob[], partition: string): str
       runAlloc.join("\n"),
     ].join("\n") + "\n"
   );
+}
+
+// Two blocks mirroring listNodeJobs:
+//   primary:      squeue -w <node> -t RUNNING -o "%i|%u|%j|%P|%M|%l|%D|%C|%b"
+//   ---ALLOC---   squeue -O tres-alloc — full AllocTRES, since these are running
+// Real Slurm resolves `-w` against each job's allocation, so we expand the mock
+// nodelists ("gpu[01-02]") the same way the node list does.
+function buildNodeJobsResponse(jobs: MockJob[], node: string): string {
+  const on = jobs.filter((j) => j.state === "RUNNING" && expandHostlist(j.reasonOrNodeList).includes(node));
+  const primary = on.map((j) =>
+    [j.jobId, j.user, j.name, j.partition, j.elapsed, j.timeLimit, j.nodes, j.cpus, tresGpu(j.tres)].join("|"),
+  );
+  const alloc = on.map(jobToAllocRow);
+  return `${primary.join("\n")}\n---ALLOC---\n${alloc.join("\n")}\n`;
 }
 
 function tresMem(tres: string): string {
@@ -1148,11 +1224,21 @@ function durationSeconds(v: string): number {
 }
 
 function jobDetail(host: string, jobId: string): string {
-  const j = jobsForHost(host).find((x) => x.jobId === jobId);
+  const jobs = jobsForHost(host);
+  // Real `scontrol show job <id>` accepts a plain/running id or the base array
+  // id — never squeue's bracketed `%i` (scontrolJobId strips it first). Mirror
+  // that: try an exact fixture match, then fall back to matching on the base
+  // array id so a pending array resolves via its base (145851_[3-64%1] → 145851).
+  const j = jobs.find((x) => x.jobId === jobId) ?? jobs.find((x) => jobIdToArrayCols(x.jobId)[0] === jobId);
   if (!j) return `JobId=${jobId} JobState=NOT_FOUND Reason=Job_not_found`;
+  const [arrayJobId, arrayTaskId] = jobIdToArrayCols(j.jobId);
+  const isArray = arrayTaskId !== "N/A";
+  // scontrol reports the base id in JobId and the array shape separately.
+  const displayJobId = isArray ? arrayJobId : j.jobId;
+  const arrayLine = isArray ? `   ArrayJobId=${arrayJobId} ArrayTaskId=${arrayTaskId}\n` : "";
   // Derive timestamps from the job's elapsed / limit so the detail view's
   // elapsed / remaining / progress stay internally consistent (and tick live).
-  const now = Date.now();
+  const now = demoNow();
   const pending = j.state === "PENDING";
   const running = j.state === "RUNNING";
   const startMs = now - durationSeconds(j.elapsed) * 1000;
@@ -1166,8 +1252,8 @@ function jobDetail(host: string, jobId: string): string {
   const endTime = pending ? "Unknown" : slurmIso(endMs);
   const submitMs = pending ? now - 5 * 60_000 : startMs - 3 * 60_000;
   return [
-    `JobId=${j.jobId} JobName=${j.name}`,
-    `   UserId=${j.user}(1000) GroupId=${j.user}(1000) MCS_label=N/A`,
+    `JobId=${displayJobId} JobName=${j.name}`,
+    arrayLine + `   UserId=${j.user}(1000) GroupId=${j.user}(1000) MCS_label=N/A`,
     `   Priority=4294901758 Nice=0 Account=research QOS=normal`,
     `   JobState=${j.state} Reason=${pending ? j.reasonOrNodeList.replace(/[()]/g, "") : "None"} Dependency=(null)`,
     `   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0`,
@@ -1183,8 +1269,8 @@ function jobDetail(host: string, jobId: string): string {
     `   AllocTRES=${pending ? "" : j.tres}`,
     `   Command=/home/${j.user}/scripts/${j.name}.sh`,
     `   WorkDir=/home/${j.user}/projects/${j.name}`,
-    `   StdErr=/home/${j.user}/logs/${j.name}-${j.jobId}.err`,
-    `   StdOut=/home/${j.user}/logs/${j.name}-${j.jobId}.out`,
+    `   StdErr=/home/${j.user}/logs/${j.name}-${displayJobId}.err`,
+    `   StdOut=/home/${j.user}/logs/${j.name}-${displayJobId}.out`,
   ].join("\n");
 }
 
@@ -1260,6 +1346,12 @@ function sleep(ms: number): Promise<void> {
 }
 
 export async function mockRunSsh(host: string, cmd: string): Promise<string> {
+  const out = await dispatch(host, cmd);
+  if (FIXTURE_LOG) mockCallLog.push({ host, cmd, out });
+  return out;
+}
+
+async function dispatch(host: string, cmd: string): Promise<string> {
   // Slight delay so React shows loading states realistically in screenshots.
   await sleep(220);
 
@@ -1275,6 +1367,13 @@ export async function mockRunSsh(host: string, cmd: string): Promise<string> {
     return buildAllResponse(jobsForHost(host));
   }
 
+  // Running jobs on one node (the Node Utilization drill-down):
+  //   squeue -h -w <node> -t RUNNING -o ...; echo '---ALLOC---'; squeue -h -w <node> -t RUNNING -O ...
+  if (cmd.startsWith("squeue -h -w ")) {
+    const m = /-w\s+(?:'([^']*)'|(\S+))/.exec(cmd);
+    return buildNodeJobsResponse(jobsForHost(host), m ? (m[1] ?? m[2] ?? "") : "");
+  }
+
   // Partition activity for the Schedule view: a chain of pending + running
   // squeue calls. The whole command starts with the pending one.
   if (cmd.startsWith("squeue -h -t PENDING")) {
@@ -1282,7 +1381,8 @@ export async function mockRunSsh(host: string, cmd: string): Promise<string> {
     return buildPartitionActivityResponse(jobsForHost(host), m ? (m[1] ?? m[2] ?? "") : "");
   }
 
-  if (cmd === "scontrol show node --oneliner") {
+  // Matches both halves of listNodes' `--future || plain` fallback command.
+  if (cmd.startsWith("scontrol show node ") && cmd.includes("--oneliner")) {
     return buildNodesResponse(nodesForHost(host));
   }
 

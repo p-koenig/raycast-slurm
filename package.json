@@ -75,6 +75,7 @@
     "@raycast/eslint-config": "^2.1.1",
     "@types/node": "^25.9.3",
     "@types/react": "^19.2.17",
+    "esbuild": "^0.27.7",
     "eslint": "^10.4.1",
     "prettier": "^3.8.4",
     "react": "^19.2.7",
@@ -83,6 +84,7 @@
   "scripts": {
     "build": "ray build -o dist",
     "dev": "ray develop",
+    "export-fixtures": "esbuild scripts/export-fixtures.ts --bundle --platform=node --target=node20 --format=cjs --log-level=warning --alias:@raycast/api=./scripts/stubs/raycast-api.ts --alias:@raycast/utils=./scripts/stubs/raycast-utils.ts --outfile=node_modules/.cache/slurm-fixtures/export-fixtures.cjs && RAYCAST_SLURM_DEMO=1 RAYCAST_SLURM_FIXTURE_LOG=1 TZ=UTC node node_modules/.cache/slurm-fixtures/export-fixtures.cjs",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
     "typecheck": "tsc --noEmit",

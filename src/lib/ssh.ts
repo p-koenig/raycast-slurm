@@ -48,6 +48,19 @@ function baseOpts(): string[] {
   return [...commonOpts(), "-o", "BatchMode=yes"];
 }
 
+// Raycast runs the extension worker inside Raycast.app (a macOS GUI process),
+// not a login shell, so it inherits the system CFLocale as a mangled string
+// like `en_US@rg=…-u-ca-gregory-u-nu-latn` that Linux glibc cannot parse.
+// Apple's stock /etc/ssh/ssh_config forwards it via `SendEnv LANG LC_*`, so
+// every remote shell greets us with
+//   bash: warning: setlocale: LC_ALL: cannot change locale (…)
+// on stderr — which then surfaced as a bogus SshError. Forcing a clean POSIX
+// locale means the value we forward is always valid (`C` exists on every Unix),
+// so the warning never appears. Spread process.env so PATH and friends survive.
+function sshEnv(): NodeJS.ProcessEnv {
+  return { ...process.env, LC_ALL: "C", LANG: "C" };
+}
+
 // Hosts confirmed present in ~/.ssh/config for the lifetime of this process.
 // Negative results are not memoized so the user can fix ~/.ssh/config and retry
 // without restarting Raycast.
@@ -93,7 +106,7 @@ export async function isMasterUp(host: string): Promise<boolean> {
     // the whole ~/.ssh/config (Include expansion + compute per alias) once per
     // host — O(N²) work that stalls the extension thread (and the keypress
     // handler) for seconds on larger configs. Any failure here just means "down".
-    await execFileP(SSH_BIN, [...baseOpts(), "-O", "check", host], { timeout: 5_000 });
+    await execFileP(SSH_BIN, [...baseOpts(), "-O", "check", host], { timeout: 5_000, env: sshEnv() });
     return true;
   } catch {
     return false;
@@ -105,7 +118,7 @@ export async function openMaster(host: string): Promise<void> {
   await ensureControlDir();
   await requireHostInConfig(host);
   try {
-    await execFileP(SSH_BIN, [...baseOpts(), "-fN", host], { timeout: 30_000 });
+    await execFileP(SSH_BIN, [...baseOpts(), "-fN", host], { timeout: 30_000, env: sshEnv() });
   } catch (err) {
     throw toSshError(err, host);
   }
@@ -115,7 +128,7 @@ export async function closeMaster(host: string): Promise<void> {
   if (DEMO_MODE && isDemoHost(host)) return;
   await ensureControlDir();
   try {
-    await execFileP(SSH_BIN, [...baseOpts(), "-O", "exit", host], { timeout: 5_000 });
+    await execFileP(SSH_BIN, [...baseOpts(), "-O", "exit", host], { timeout: 5_000, env: sshEnv() });
   } catch {
     /* already closed */
   }
@@ -131,6 +144,7 @@ export async function runSsh(host: string, cmd: string, opts: RunOpts = {}): Pro
     const { stdout } = await execFileP(SSH_BIN, [...baseOpts(), host, cmd], {
       timeout: opts.timeout ?? 15_000,
       maxBuffer: opts.maxBuffer ?? 16 * 1024 * 1024,
+      env: sshEnv(),
     });
     return stdout;
   } catch (err) {
@@ -139,7 +153,7 @@ export async function runSsh(host: string, cmd: string, opts: RunOpts = {}): Pro
 }
 
 export function spawnSsh(host: string, cmd: string): ChildProcess {
-  return spawn(SSH_BIN, [...baseOpts(), host, cmd], { stdio: ["ignore", "pipe", "pipe"] });
+  return spawn(SSH_BIN, [...baseOpts(), host, cmd], { stdio: ["ignore", "pipe", "pipe"], env: sshEnv() });
 }
 
 export function interactiveOpenMasterCmd(host: string): string {

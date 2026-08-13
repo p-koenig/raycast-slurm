@@ -1,7 +1,9 @@
 import { ChildProcess } from "node:child_process";
 import { runSsh, spawnSsh } from "./ssh";
+import { SshError } from "./errors";
 import { shellQuote } from "./shell";
 import { parseSlurmDurationSeconds } from "./format";
+import { expandHostlist } from "./hostlist";
 
 function splitOnSentinel(s: string, sentinel: string): [string, string] {
   const idx = s.indexOf(sentinel);
@@ -9,22 +11,64 @@ function splitOnSentinel(s: string, sentinel: string): [string, string] {
   return [s.slice(0, idx), s.slice(idx + sentinel.length)];
 }
 
+// squeue -O column layout for the AllocTRES join. The format string handed to
+// `squeue` and the slice offsets in parseAllocTres MUST stay in lockstep (the
+// two-call pattern is fragile precisely here — see CLAUDE.md), so both derive
+// from these constants. tres-alloc keeps a wide column because AllocTRES grows
+// with every resource type; ArrayJobID/ArrayTaskID are short (an int, and a
+// task index or a "44-67%2"-style range).
+const ALLOC_JOBID_WIDTH = 24;
+const ALLOC_TASKID_WIDTH = 24;
+const ALLOC_TRES_FMT = `ArrayJobID:${ALLOC_JOBID_WIDTH},ArrayTaskID:${ALLOC_TASKID_WIDTH},tres-alloc:512`;
+
 /**
- * Parse the output of `squeue -O "JobID:N,tres-alloc:M"` into a map of
- * JobID -> AllocTRES string. The output uses fixed-width columns where the
- * first `idWidth` characters are the JobID, followed by the TRES string
- * (also right-padded to its declared width).
+ * Parse the output of `squeue -O ALLOC_TRES_FMT` into a map of job-id ->
+ * AllocTRES, keyed to match the primary `-o %i` column so allocForJob can join
+ * them.
+ *
+ * We deliberately do NOT key on `-O JobID`: for a RUNNING array task that field
+ * prints the task's underlying JobID (e.g. 6718 for 6644_33), which `%i` never
+ * exposes — so a JobID-keyed map cannot be joined for a running array task at
+ * all (its `%b` GPU/mem shorthand then silently vanishes, especially in the
+ * node drill-down whose `-t RUNNING` alloc call has no pending-array row to fall
+ * back on). Instead we reconstruct the `%i` notation from ArrayJobID +
+ * ArrayTaskID:
+ *   • numeric ArrayTaskID → running task, key "6644_33"
+ *   • "N/A" (non-array)   → key on ArrayJobID alone (== the JobID, e.g. "6690")
+ *   • a range "44-67%2"   → pending array, key on ArrayJobID ("6644")
+ * The bare-ArrayJobID key is what allocForJob's suffix-stripped fallback matches
+ * for a pending array range (whose `%i` is "6644_[44-67%2]").
  */
-function parseAllocTres(block: string, idWidth: number): Map<string, string> {
+function parseAllocTres(block: string): Map<string, string> {
   const map = new Map<string, string>();
   for (const rawLine of block.split("\n")) {
     if (!rawLine.trim()) continue;
-    const id = rawLine.slice(0, idWidth).trim();
-    const tres = rawLine.slice(idWidth).trim();
-    if (!id) continue;
-    map.set(id, tres);
+    const arrayJobId = rawLine.slice(0, ALLOC_JOBID_WIDTH).trim();
+    const arrayTaskId = rawLine.slice(ALLOC_JOBID_WIDTH, ALLOC_JOBID_WIDTH + ALLOC_TASKID_WIDTH).trim();
+    const tres = rawLine.slice(ALLOC_JOBID_WIDTH + ALLOC_TASKID_WIDTH).trim();
+    if (!arrayJobId) continue;
+    const key = /^\d+$/.test(arrayTaskId) ? `${arrayJobId}_${arrayTaskId}` : arrayJobId;
+    map.set(key, tres);
   }
   return map;
+}
+
+// Resolve a primary-row job id (`%i`) to its AllocTRES entry. parseAllocTres
+// keys a running array task under its reconstructed "base_task" notation, so a
+// running task ("5818_27") lands on the exact lookup. A pending array range's
+// `%i` is "5818_[28-50%2]", which never matches directly, so we retry with the
+// task suffix stripped to hit the bare-ArrayJobID key ("5818"). Empty entries
+// are ignored (returns undefined) so the caller keeps the `%b` shorthand.
+// Non-array ids (no `_`) only ever hit the exact lookup.
+function allocForJob(allocByJob: Map<string, string>, jobId: string): string | undefined {
+  const exact = allocByJob.get(jobId);
+  if (exact) return exact;
+  const base = jobId.replace(/_.*$/, "");
+  if (base !== jobId) {
+    const fallback = allocByJob.get(base);
+    if (fallback) return fallback;
+  }
+  return undefined;
 }
 
 export type JobState =
@@ -86,21 +130,21 @@ export async function detectUser(host: string): Promise<string> {
 
 export async function listJobs(host: string, user: string): Promise<Job[]> {
   const fmt = "%i|%P|%j|%T|%M|%l|%D|%C|%R|%b";
-  const allocFmt = "JobID:64,tres-alloc:512";
+  const allocFmt = ALLOC_TRES_FMT;
   const cmd =
     `squeue -h -u ${shellQuote(user)} -o ${shellQuote(fmt)}; ` +
     `echo '---ALLOC---'; ` +
     `squeue -h -u ${shellQuote(user)} -O ${shellQuote(allocFmt)}`;
   const out = await runSsh(host, cmd);
   const [primary, allocBlock = ""] = splitOnSentinel(out, "---ALLOC---");
-  const allocByJob = parseAllocTres(allocBlock, 64);
+  const allocByJob = parseAllocTres(allocBlock);
   const jobs = primary
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean)
     .map(parseJobRow);
   for (const j of jobs) {
-    const a = allocByJob.get(j.jobId);
+    const a = allocForJob(allocByJob, j.jobId);
     if (a) j.tres = a;
   }
   return jobs;
@@ -140,18 +184,18 @@ function parseJobRow(row: string): Job {
 
 export async function listAllJobs(host: string): Promise<Job[]> {
   const fmt = "%i|%P|%j|%T|%M|%l|%D|%C|%R|%u|%b";
-  const allocFmt = "JobID:64,tres-alloc:512";
+  const allocFmt = ALLOC_TRES_FMT;
   const cmd = `squeue -h -o ${shellQuote(fmt)}; ` + `echo '---ALLOC---'; ` + `squeue -h -O ${shellQuote(allocFmt)}`;
   const out = await runSsh(host, cmd);
   const [primary, allocBlock = ""] = splitOnSentinel(out, "---ALLOC---");
-  const allocByJob = parseAllocTres(allocBlock, 64);
+  const allocByJob = parseAllocTres(allocBlock);
   const jobs = primary
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean)
     .map(parseAllJobRow);
   for (const j of jobs) {
-    const a = allocByJob.get(j.jobId);
+    const a = allocForJob(allocByJob, j.jobId);
     if (a) j.tres = a;
   }
   return jobs;
@@ -200,7 +244,7 @@ export type PartitionActivity = { pending: QueueEntry[]; running: RunningEntry[]
 // they do in the All Jobs view (gpuLabelFromTres / memFromTres over `tres`).
 export async function listPartitionActivity(host: string, partition: string): Promise<PartitionActivity> {
   const p = shellQuote(partition);
-  const allocFmt = "JobID:64,tres-alloc:512";
+  const allocFmt = ALLOC_TRES_FMT;
   const pendFmt = "%i|%j|%u|%C|%m|%l|%b";
   const runFmt = "%i|%j|%u|%C|%m|%l|%L|%b";
   const cmd =
@@ -232,9 +276,9 @@ function parseRows<T>(block: string, parse: (row: string) => T): T[] {
 // Overwrite each entry's `tres` with its AllocTRES (when present) the same way
 // listAllJobs does; pending jobs keep the `%b` shorthand from the primary row.
 function joinAlloc<T extends { jobId: string; tres: string }>(entries: T[], allocBlock: string): T[] {
-  const allocByJob = parseAllocTres(allocBlock, 64);
+  const allocByJob = parseAllocTres(allocBlock);
   for (const e of entries) {
-    const a = allocByJob.get(e.jobId);
+    const a = allocForJob(allocByJob, e.jobId);
     if (a) e.tres = a;
   }
   return entries;
@@ -273,8 +317,100 @@ function timeLeftSeconds(v: string): number {
   return parseSlurmDurationSeconds(v) ?? Number.MAX_SAFE_INTEGER;
 }
 
+export type NodeJob = {
+  jobId: string;
+  user: string;
+  name: string;
+  partition: string;
+  elapsed: string;
+  timeLimit: string;
+  nodeCount: string; // %D — how many nodes the job holds, this one included
+  cpus: string;
+  tres: string; // AllocTRES (see the caveat on listNodeJobs)
+};
+
+// Everything RUNNING on a single node — the Node Utilization drill-down. `-w`
+// selects jobs holding an allocation on that node; the AllocTRES join mirrors
+// listAllJobs so the GPU/mem tags parse identically to the other job lists.
+//
+// CAVEAT: AllocTRES is job-wide, so for a job spanning several nodes the CPU /
+// mem / GPU figures cover its whole allocation, not just its share of *this*
+// node. Slurm exposes no per-node breakdown via squeue, so we carry `nodeCount`
+// and let the UI flag those rows rather than print a number we can't stand behind.
+const NODE_JOB_FMT = "%i|%u|%j|%P|%M|%l|%D|%C|%b";
+
+export async function listNodeJobs(host: string, node: string): Promise<NodeJob[]> {
+  const w = shellQuote(node);
+  const allocFmt = ALLOC_TRES_FMT;
+  const cmd =
+    `squeue -h -w ${w} -t RUNNING -o ${shellQuote(NODE_JOB_FMT)}; echo '---ALLOC---'; ` +
+    `squeue -h -w ${w} -t RUNNING -O ${shellQuote(allocFmt)}`;
+  try {
+    const out = await runSsh(host, cmd);
+    const [primary, allocBlock = ""] = splitOnSentinel(out, "---ALLOC---");
+    return joinAlloc(parseRows(primary, parseNodeJobRow), allocBlock);
+  } catch (err) {
+    if (!isInvalidNodeName(err)) throw err;
+    return listNodeJobsByNodeList(host, node);
+  }
+}
+
+// squeue resolves `-w` against the controller's *usable* node table, which on a
+// cloud/dynamic cluster excludes the very nodes `scontrol show node --future`
+// surfaces (see SHOW_NODES_CMD) — every drill-down there dies with
+// "squeue: error: Invalid node name <node>", including for nodes that plainly
+// have running jobs. So we re-ask without the filter, carrying `%N` (the job's
+// allocated nodelist) as an extra trailing column, and match client-side.
+// Cluster-wide `-t RUNNING` is the heavier query, hence fallback-only: clusters
+// whose `-w` works never issue it.
+async function listNodeJobsByNodeList(host: string, node: string): Promise<NodeJob[]> {
+  const cmd =
+    `squeue -h -t RUNNING -o ${shellQuote(`${NODE_JOB_FMT}|%N`)}; echo '---ALLOC---'; ` +
+    `squeue -h -t RUNNING -O ${shellQuote(ALLOC_TRES_FMT)}`;
+  const out = await runSsh(host, cmd);
+  const [primary, allocBlock = ""] = splitOnSentinel(out, "---ALLOC---");
+  // parseNodeJobRow reads fields 0..8, so the appended %N is ignored by it and
+  // read separately here.
+  const rows = parseRows(primary, (row) => ({
+    job: parseNodeJobRow(row),
+    nodes: expandHostlist(row.split("|")[9] ?? ""),
+  }));
+  const onNode = rows.filter((r) => r.nodes.includes(node)).map((r) => r.job);
+  return joinAlloc(onNode, allocBlock);
+}
+
+function isInvalidNodeName(err: unknown): boolean {
+  if (!(err instanceof SshError)) return false;
+  return /invalid node name/i.test(`${err.info.raw} ${err.info.message}`);
+}
+
+function parseNodeJobRow(row: string): NodeJob {
+  const p = row.split("|");
+  return {
+    jobId: p[0] ?? "",
+    user: p[1] ?? "",
+    name: p[2] ?? "",
+    partition: p[3] ?? "",
+    elapsed: p[4] ?? "",
+    timeLimit: p[5] ?? "",
+    nodeCount: p[6] ?? "",
+    cpus: p[7] ?? "",
+    tres: p[8] ?? "",
+  };
+}
+
+// squeue's `%i` renders a still-pending array as `6754_[380-543%1]` — base id +
+// bracketed task range + optional `%N` throttle. scontrol's job-id parser rejects
+// that syntax outright ("Invalid job id specified"), so strip the bracketed tail
+// and query the base array job id, which scontrol resolves to the pending array
+// record. A running task (`6754_380`) and a plain job (`6754`) contain no bracket
+// and pass through unchanged, so scontrol still gets that exact task/job.
+export function scontrolJobId(jobId: string): string {
+  return jobId.replace(/_\[.*$/, "");
+}
+
 export async function showJob(host: string, jobId: string): Promise<JobDetail> {
-  const raw = await runSsh(host, `scontrol show job ${shellQuote(jobId)}`);
+  const raw = await runSsh(host, `scontrol show job ${shellQuote(scontrolJobId(jobId))}`);
   const fields = tokenizeKv(raw);
   return { raw, fields };
 }
@@ -285,8 +421,20 @@ export async function cancelJob(host: string, jobId: string): Promise<void> {
 
 // ---------- nodes ----------
 
+// `scontrol show node` silently omits nodes slurmctld considers not-yet-real:
+// FUTURE-state nodes, and cloud/dynamic nodes it can't resolve an address for
+// (`Reason=NO NETWORK ADDRESS FOUND`). On a cloud-provisioned cluster that can
+// be *every* node — the Info/Utilization views then render empty while the job
+// views work fine, because squeue is unaffected. `--future` includes them, and
+// their records are complete (CPUTot / RealMemory / Gres / Partitions / TRES),
+// so everything downstream parses as usual; the node's `State` still says
+// FUTURE where that's the case. The flag landed in Slurm 20.11, hence the
+// fallback for older controllers — kept in one command so it stays one round
+// trip on the clusters that do support it.
+const SHOW_NODES_CMD = "scontrol show node --future --oneliner 2>/dev/null || scontrol show node --oneliner";
+
 export async function listNodes(host: string): Promise<SlurmNode[]> {
-  const out = await runSsh(host, "scontrol show node --oneliner");
+  const out = await runSsh(host, SHOW_NODES_CMD);
   return out
     .split("\n")
     .map((l) => l.trim())

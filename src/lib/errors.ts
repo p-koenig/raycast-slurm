@@ -48,6 +48,28 @@ function extractText(err: unknown): { stderr: string; message: string } {
   return { stderr: "", message: String(err) };
 }
 
+// Lines that stock SSH / remote login shells emit to stderr but that never
+// indicate a real failure. The macOS GUI locale (forwarded via SendEnv) is the
+// worst offender: without stripping it, a genuinely-failed remote command
+// (e.g. `scontrol show job` for a finished job) reported the locale warning as
+// its message instead of the real "Invalid job id specified". We normalize the
+// locale in ssh.ts so this shouldn't fire, but keep the filter for clusters or
+// SSH configs that inject it some other way.
+const BENIGN_STDERR = [
+  /warning:\s*setlocale/i,
+  /cannot change locale/i,
+  /^\s*Warning: Permanently added .* to the list of known hosts\.?\s*$/i,
+  /^\s*Pseudo-terminal will not be allocated/i,
+];
+
+function stripBenign(stderr: string): string {
+  return stderr
+    .split("\n")
+    .filter((line) => line.trim() && !BENIGN_STDERR.some((re) => re.test(line)))
+    .join("\n")
+    .trim();
+}
+
 function firstLine(s: string, max = 200): string {
   const line =
     s
@@ -66,8 +88,9 @@ export function classifySshError(err: unknown, host?: string): SshErrorInfo {
     // If a caller passes an already-classified error, just rehome the host.
     return { ...err.info, host: err.info.host ?? host };
   }
-  const { stderr, message } = extractText(err);
-  const raw = stderr || message || "Unknown error";
+  const { stderr: rawStderr, message } = extractText(err);
+  const stderr = stripBenign(rawStderr);
+  const raw = rawStderr || message || "Unknown error";
   const haystack = `${stderr}\n${message}`;
 
   // Auth

@@ -82,6 +82,46 @@ export function latestGpu(samples: MetricSample[], index: number): GpuSample | n
   return null;
 }
 
+// Running per-series sum/count, accumulated as ticks arrive. This is what backs
+// the run average: the retained MetricSample[] is capped (memory), so averaging
+// over it would silently turn "run" into a rolling window once the cap is hit.
+// Folding each tick in here instead keeps the run figure exact for the whole
+// session at O(series) memory, independent of how long the view stays open.
+export type RunStats = Map<string, { sum: number; n: number }>;
+
+// Series keys are stable across ticks so a GPU's history survives a tick that
+// happens to omit it (nvidia-smi hiccup); they never collide with cpu/ram.
+export function gpuKey(index: number, field: "util" | "memPct"): string {
+  return `gpu:${index}:${field}`;
+}
+
+// Fold ticks into `stats`, returning a new Map (callers hold this in state).
+export function accumulate(stats: RunStats, samples: MetricSample[]): RunStats {
+  const next = new Map(stats);
+  for (const s of samples) {
+    for (const g of s.gpus) {
+      bump(next, gpuKey(g.index, "util"), g.util);
+      bump(next, gpuKey(g.index, "memPct"), g.memPct);
+    }
+    bump(next, "cpu", s.cpu);
+    bump(next, "ram", s.ram);
+  }
+  return next;
+}
+
+// Session-wide average for one series, or null if it never reported a value.
+export function runAvg(stats: RunStats, key: string): number | null {
+  const e = stats.get(key);
+  return e && e.n ? e.sum / e.n : null;
+}
+
+function bump(stats: RunStats, key: string, v: number | null): void {
+  if (v == null || !Number.isFinite(v)) return;
+  const e = stats.get(key);
+  if (e) stats.set(key, { sum: e.sum + v, n: e.n + 1 });
+  else stats.set(key, { sum: v, n: 1 });
+}
+
 // Average of `pick` over samples no older than `sinceMs` (use 0 for "all").
 export function windowAvg(
   samples: MetricSample[],

@@ -1,0 +1,456 @@
+{
+  "cases": [
+    {
+      "cmd": "squeue -h -t PENDING -p gpu --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p gpu --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p gpu -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p gpu -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [
+          {
+            "cpus": "16",
+            "jobId": "145840",
+            "mem": "128G",
+            "name": "stable_video",
+            "timeLimit": "8:00:00",
+            "tres": "gres/gpu:h100=4",
+            "user": "k.nakamura"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145847",
+            "mem": "64G",
+            "name": "diffusion_eval",
+            "timeLimit": "2:00:00",
+            "tres": "gres/gpu:a100=2",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "4",
+            "jobId": "145849",
+            "mem": "32G",
+            "name": "sweep_lr_007",
+            "timeLimit": "6:00:00",
+            "tres": "gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145851_[3-64%1]",
+            "mem": "64G",
+            "name": "grid_search",
+            "timeLimit": "4:00:00",
+            "tres": "gres/gpu:a100=1",
+            "user": "r.shaw"
+          }
+        ],
+        "running": [
+          {
+            "cpus": "8",
+            "jobId": "145843_7",
+            "mem": "64G",
+            "name": "hp_sweep",
+            "timeLeft": "06:56:49",
+            "timeLimit": "8:00:00",
+            "tres": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "16",
+            "jobId": "145756",
+            "mem": "128G",
+            "name": "whisper_finetune",
+            "timeLeft": "09:36:59",
+            "timeLimit": "1-00:00:00",
+            "tres": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2",
+            "user": "bob.park"
+          },
+          {
+            "cpus": "16",
+            "jobId": "145789",
+            "mem": "64G",
+            "name": "bert_finetune",
+            "timeLeft": "11:14:37",
+            "timeLimit": "12:00:00",
+            "tres": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145823",
+            "mem": "80G",
+            "name": "llava_finetune",
+            "timeLeft": "15:45:25",
+            "timeLimit": "18:00:00",
+            "tres": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145791",
+            "mem": "180G",
+            "name": "vit_pretrain",
+            "timeLeft": "17:47:12",
+            "timeLimit": "1-00:00:00",
+            "tres": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145817",
+            "mem": "240G",
+            "name": "protein_fold",
+            "timeLeft": "1-12:17:27",
+            "timeLimit": "2-00:00:00",
+            "tres": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4",
+            "user": "g.nikolov"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145773",
+            "mem": "200G",
+            "name": "qwen_dpo",
+            "timeLeft": "1-15:17:45",
+            "timeLimit": "2-00:00:00",
+            "tres": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1",
+            "user": "c.dubois"
+          }
+        ]
+      },
+      "host": "phoenix",
+      "input": "145840|stable_video|k.nakamura|16|128G|8:00:00|gres/gpu:h100=4\n145847|diffusion_eval|r.shaw|8|64G|2:00:00|gres/gpu:a100=2\n145849|sweep_lr_007|r.shaw|4|32G|6:00:00|gres/gpu:a100=1\n145851_[3-64%1]|grid_search|r.shaw|8|64G|4:00:00|gres/gpu:a100=1\n---PALLOC---\n\n---RUN---\n145789|bert_finetune|r.shaw|16|64G|12:00:00|11:14:37|gres/gpu:a100=1\n145791|vit_pretrain|r.shaw|32|180G|1-00:00:00|17:47:12|gres/gpu:h100=2\n145823|llava_finetune|r.shaw|8|80G|18:00:00|15:45:25|gres/gpu:a100=1\n145843_7|hp_sweep|r.shaw|8|64G|8:00:00|06:56:49|gres/gpu:a100=1\n145756|whisper_finetune|bob.park|16|128G|1-00:00:00|09:36:59|gres/gpu:a100=2\n145773|qwen_dpo|c.dubois|32|200G|2-00:00:00|1-15:17:45|gres/gpu:h100=1\n145817|protein_fold|g.nikolov|32|240G|2-00:00:00|1-12:17:27|gres/gpu:h100=4\n---RALLOC---\n145789                  N/A                     cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\n145791                  N/A                     cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\n145823                  N/A                     cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\n145843                  7                       cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\n145756                  N/A                     cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\n145773                  N/A                     cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\n145817                  N/A                     cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\n",
+      "name": "phoenix-gpu-pending-and-running"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p gpu-long --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p gpu-long --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p gpu-long -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p gpu-long -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [],
+        "running": [
+          {
+            "cpus": "48",
+            "jobId": "145812",
+            "mem": "320G",
+            "name": "sd3_finetune",
+            "timeLeft": "2-05:25:58",
+            "timeLimit": "3-00:00:00",
+            "tres": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "96",
+            "jobId": "145701",
+            "mem": "720G",
+            "name": "train_dalle3",
+            "timeLeft": "3-15:45:38",
+            "timeLimit": "7-00:00:00",
+            "tres": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8",
+            "user": "alice.chen"
+          },
+          {
+            "cpus": "192",
+            "jobId": "145782",
+            "mem": "1280G",
+            "name": "train_llama_70b",
+            "timeLeft": "4-09:36:49",
+            "timeLimit": "7-00:00:00",
+            "tres": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14",
+            "user": "r.shaw"
+          }
+        ]
+      },
+      "host": "phoenix",
+      "input": "\n---PALLOC---\n\n---RUN---\n145782|train_llama_70b|r.shaw|192|1280G|7-00:00:00|4-09:36:49|gres/gpu:h100=14\n145812|sd3_finetune|r.shaw|48|320G|3-00:00:00|2-05:25:58|gres/gpu:a100=3\n145701|train_dalle3|alice.chen|96|720G|7-00:00:00|3-15:45:38|gres/gpu:h100=8\n---RALLOC---\n145782                  N/A                     cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\n145812                  N/A                     cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\n145701                  N/A                     cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\n",
+      "name": "phoenix-gpu-long-running-only"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p debug --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p debug --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p debug -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p debug -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [],
+        "running": []
+      },
+      "host": "phoenix",
+      "input": "\n---PALLOC---\n\n---RUN---\n\n---RALLOC---\n\n",
+      "name": "phoenix-debug-both-empty"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p '' --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p '' --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p '' -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p '' -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [
+          {
+            "cpus": "16",
+            "jobId": "145840",
+            "mem": "128G",
+            "name": "stable_video",
+            "timeLimit": "8:00:00",
+            "tres": "gres/gpu:h100=4",
+            "user": "k.nakamura"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145847",
+            "mem": "64G",
+            "name": "diffusion_eval",
+            "timeLimit": "2:00:00",
+            "tres": "gres/gpu:a100=2",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "4",
+            "jobId": "145849",
+            "mem": "32G",
+            "name": "sweep_lr_007",
+            "timeLimit": "6:00:00",
+            "tres": "gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145851_[3-64%1]",
+            "mem": "64G",
+            "name": "grid_search",
+            "timeLimit": "4:00:00",
+            "tres": "gres/gpu:a100=1",
+            "user": "r.shaw"
+          }
+        ],
+        "running": [
+          {
+            "cpus": "8",
+            "jobId": "145843_7",
+            "mem": "64G",
+            "name": "hp_sweep",
+            "timeLeft": "06:56:49",
+            "timeLimit": "8:00:00",
+            "tres": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "16",
+            "jobId": "145756",
+            "mem": "128G",
+            "name": "whisper_finetune",
+            "timeLeft": "09:36:59",
+            "timeLimit": "1-00:00:00",
+            "tres": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2",
+            "user": "bob.park"
+          },
+          {
+            "cpus": "16",
+            "jobId": "145789",
+            "mem": "64G",
+            "name": "bert_finetune",
+            "timeLeft": "11:14:37",
+            "timeLimit": "12:00:00",
+            "tres": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "8",
+            "jobId": "145823",
+            "mem": "80G",
+            "name": "llava_finetune",
+            "timeLeft": "15:45:25",
+            "timeLimit": "18:00:00",
+            "tres": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145791",
+            "mem": "180G",
+            "name": "vit_pretrain",
+            "timeLeft": "17:47:12",
+            "timeLimit": "1-00:00:00",
+            "tres": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145817",
+            "mem": "240G",
+            "name": "protein_fold",
+            "timeLeft": "1-12:17:27",
+            "timeLimit": "2-00:00:00",
+            "tres": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4",
+            "user": "g.nikolov"
+          },
+          {
+            "cpus": "32",
+            "jobId": "145773",
+            "mem": "200G",
+            "name": "qwen_dpo",
+            "timeLeft": "1-15:17:45",
+            "timeLimit": "2-00:00:00",
+            "tres": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1",
+            "user": "c.dubois"
+          },
+          {
+            "cpus": "48",
+            "jobId": "145812",
+            "mem": "320G",
+            "name": "sd3_finetune",
+            "timeLeft": "2-05:25:58",
+            "timeLimit": "3-00:00:00",
+            "tres": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "96",
+            "jobId": "145701",
+            "mem": "720G",
+            "name": "train_dalle3",
+            "timeLeft": "3-15:45:38",
+            "timeLimit": "7-00:00:00",
+            "tres": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8",
+            "user": "alice.chen"
+          },
+          {
+            "cpus": "192",
+            "jobId": "145782",
+            "mem": "1280G",
+            "name": "train_llama_70b",
+            "timeLeft": "4-09:36:49",
+            "timeLimit": "7-00:00:00",
+            "tres": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14",
+            "user": "r.shaw"
+          }
+        ]
+      },
+      "host": "phoenix",
+      "input": "145840|stable_video|k.nakamura|16|128G|8:00:00|gres/gpu:h100=4\n145847|diffusion_eval|r.shaw|8|64G|2:00:00|gres/gpu:a100=2\n145849|sweep_lr_007|r.shaw|4|32G|6:00:00|gres/gpu:a100=1\n145851_[3-64%1]|grid_search|r.shaw|8|64G|4:00:00|gres/gpu:a100=1\n---PALLOC---\n\n---RUN---\n145782|train_llama_70b|r.shaw|192|1280G|7-00:00:00|4-09:36:49|gres/gpu:h100=14\n145789|bert_finetune|r.shaw|16|64G|12:00:00|11:14:37|gres/gpu:a100=1\n145791|vit_pretrain|r.shaw|32|180G|1-00:00:00|17:47:12|gres/gpu:h100=2\n145812|sd3_finetune|r.shaw|48|320G|3-00:00:00|2-05:25:58|gres/gpu:a100=3\n145823|llava_finetune|r.shaw|8|80G|18:00:00|15:45:25|gres/gpu:a100=1\n145843_7|hp_sweep|r.shaw|8|64G|8:00:00|06:56:49|gres/gpu:a100=1\n145701|train_dalle3|alice.chen|96|720G|7-00:00:00|3-15:45:38|gres/gpu:h100=8\n145756|whisper_finetune|bob.park|16|128G|1-00:00:00|09:36:59|gres/gpu:a100=2\n145773|qwen_dpo|c.dubois|32|200G|2-00:00:00|1-15:17:45|gres/gpu:h100=1\n145817|protein_fold|g.nikolov|32|240G|2-00:00:00|1-12:17:27|gres/gpu:h100=4\n---RALLOC---\n145782                  N/A                     cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\n145789                  N/A                     cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\n145791                  N/A                     cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\n145812                  N/A                     cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\n145823                  N/A                     cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\n145843                  7                       cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\n145701                  N/A                     cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\n145756                  N/A                     cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\n145773                  N/A                     cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\n145817                  N/A                     cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\n",
+      "name": "phoenix-empty-partition-arg"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p cpu-long --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p cpu-long --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p cpu-long -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p cpu-long -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [
+          {
+            "cpus": "48",
+            "jobId": "92358",
+            "mem": "192G",
+            "name": "build_index",
+            "timeLimit": "1-00:00:00",
+            "tres": "",
+            "user": "r.shaw"
+          }
+        ],
+        "running": [
+          {
+            "cpus": "48",
+            "jobId": "92301",
+            "mem": "192G",
+            "name": "sim_climate",
+            "timeLeft": "09:36:59",
+            "timeLimit": "1-00:00:00",
+            "tres": "cpu=48,mem=192G,node=1",
+            "user": "alice.chen"
+          }
+        ]
+      },
+      "host": "nimbus",
+      "input": "92358|build_index|r.shaw|48|192G|1-00:00:00|\n---PALLOC---\n\n---RUN---\n92301|sim_climate|alice.chen|48|192G|1-00:00:00|09:36:59|\n---RALLOC---\n92301                   N/A                     cpu=48,mem=192G,node=1\n",
+      "name": "nimbus-cpu-long-pending-and-running"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p gpu --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p gpu --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p gpu -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p gpu -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [
+          {
+            "cpus": "8",
+            "jobId": "92355",
+            "mem": "48G",
+            "name": "tts_finetune",
+            "timeLimit": "4:00:00",
+            "tres": "gres/gpu:l40s=1",
+            "user": "k.nakamura"
+          }
+        ],
+        "running": [
+          {
+            "cpus": "8",
+            "jobId": "92335",
+            "mem": "48G",
+            "name": "cv_baseline",
+            "timeLeft": "03:45:52",
+            "timeLimit": "6:00:00",
+            "tres": "cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1",
+            "user": "g.nikolov"
+          },
+          {
+            "cpus": "16",
+            "jobId": "92318",
+            "mem": "96G",
+            "name": "tabular_train",
+            "timeLeft": "05:47:12",
+            "timeLimit": "12:00:00",
+            "tres": "cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2",
+            "user": "c.dubois"
+          },
+          {
+            "cpus": "16",
+            "jobId": "92347",
+            "mem": "64G",
+            "name": "hp_search_run3",
+            "timeLeft": "07:51:48",
+            "timeLimit": "12:00:00",
+            "tres": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1",
+            "user": "r.shaw"
+          }
+        ]
+      },
+      "host": "nimbus",
+      "input": "92355|tts_finetune|k.nakamura|8|48G|4:00:00|gres/gpu:l40s=1\n---PALLOC---\n\n---RUN---\n92347|hp_search_run3|r.shaw|16|64G|12:00:00|07:51:48|gres/gpu:l40s=1\n92318|tabular_train|c.dubois|16|96G|12:00:00|05:47:12|gres/gpu:l40s=2\n92335|cv_baseline|g.nikolov|8|48G|6:00:00|03:45:52|gres/gpu:l40s=1\n---RALLOC---\n92347                   N/A                     cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\n92318                   N/A                     cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2\n92335                   N/A                     cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1\n",
+      "name": "nimbus-gpu"
+    },
+    {
+      "cmd": "squeue -h -t PENDING -p cpu,dev --sort=-p,i -o '%i|%j|%u|%C|%m|%l|%b'; echo '---PALLOC---'; squeue -h -t PENDING -p cpu,dev --sort=-p,i -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512; echo '---RUN---'; squeue -h -t RUNNING -p cpu,dev -o '%i|%j|%u|%C|%m|%l|%L|%b'; echo '---RALLOC---'; squeue -h -t RUNNING -p cpu,dev -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": {
+        "pending": [],
+        "running": [
+          {
+            "cpus": "16",
+            "jobId": "92352",
+            "mem": "64G",
+            "name": "evaluate_baselines",
+            "timeLeft": "01:25:42",
+            "timeLimit": "2:00:00",
+            "tres": "cpu=16,mem=64G,node=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "92341",
+            "mem": "128G",
+            "name": "data_preprocess",
+            "timeLeft": "02:36:15",
+            "timeLimit": "4:00:00",
+            "tres": "cpu=32,mem=128G,node=1",
+            "user": "r.shaw"
+          },
+          {
+            "cpus": "32",
+            "jobId": "92312",
+            "mem": "128G",
+            "name": "geno_align",
+            "timeLeft": "04:17:42",
+            "timeLimit": "8:00:00",
+            "tres": "cpu=32,mem=128G,node=1",
+            "user": "bob.park"
+          },
+          {
+            "cpus": "4",
+            "jobId": "92361",
+            "mem": "32G",
+            "name": "notebook",
+            "timeLeft": "05:41:18",
+            "timeLimit": "8:00:00",
+            "tres": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1",
+            "user": "r.shaw"
+          }
+        ]
+      },
+      "host": "nimbus",
+      "input": "\n---PALLOC---\n\n---RUN---\n92341|data_preprocess|r.shaw|32|128G|4:00:00|02:36:15|\n92352|evaluate_baselines|r.shaw|16|64G|2:00:00|01:25:42|\n92361|notebook|r.shaw|4|32G|8:00:00|05:41:18|gres/gpu:l40s=1\n92312|geno_align|bob.park|32|128G|8:00:00|04:17:42|\n---RALLOC---\n92341                   N/A                     cpu=32,mem=128G,node=1\n92352                   N/A                     cpu=16,mem=64G,node=1\n92361                   N/A                     cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1\n92312                   N/A                     cpu=32,mem=128G,node=1\n",
+      "name": "nimbus-multi-partition"
+    }
+  ],
+  "kind": "partition-activity",
+  "version": 1
+}

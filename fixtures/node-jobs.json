@@ -1,0 +1,130 @@
+{
+  "cases": [
+    {
+      "cmd": "squeue -h -w gpu01 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w gpu01 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [
+        {
+          "cpus": "192",
+          "elapsed": "2-14:23:11",
+          "jobId": "145782",
+          "name": "train_llama_70b",
+          "nodeCount": "2",
+          "partition": "gpu-long",
+          "timeLimit": "7-00:00:00",
+          "tres": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14",
+          "user": "r.shaw"
+        },
+        {
+          "cpus": "32",
+          "elapsed": "8:42:15",
+          "jobId": "145773",
+          "name": "qwen_dpo",
+          "nodeCount": "1",
+          "partition": "gpu",
+          "timeLimit": "2-00:00:00",
+          "tres": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1",
+          "user": "c.dubois"
+        }
+      ],
+      "host": "phoenix",
+      "input": "145782|r.shaw|train_llama_70b|gpu-long|2-14:23:11|7-00:00:00|2|192|gres/gpu:h100=14\n145773|c.dubois|qwen_dpo|gpu|8:42:15|2-00:00:00|1|32|gres/gpu:h100=1\n---ALLOC---\n145782                  N/A                     cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\n145773                  N/A                     cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\n",
+      "name": "phoenix-gpu01-multinode"
+    },
+    {
+      "cmd": "squeue -h -w gpu14 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w gpu14 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [
+        {
+          "cpus": "8",
+          "elapsed": "2:14:35",
+          "jobId": "145823",
+          "name": "llava_finetune",
+          "nodeCount": "1",
+          "partition": "gpu",
+          "timeLimit": "18:00:00",
+          "tres": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1",
+          "user": "r.shaw"
+        },
+        {
+          "cpus": "8",
+          "elapsed": "1:03:11",
+          "jobId": "145843_7",
+          "name": "hp_sweep",
+          "nodeCount": "1",
+          "partition": "gpu",
+          "timeLimit": "8:00:00",
+          "tres": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1",
+          "user": "r.shaw"
+        }
+      ],
+      "host": "phoenix",
+      "input": "145823|r.shaw|llava_finetune|gpu|2:14:35|18:00:00|1|8|gres/gpu:a100=1\n145843_7|r.shaw|hp_sweep|gpu|1:03:11|8:00:00|1|8|gres/gpu:a100=1\n---ALLOC---\n145823                  N/A                     cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\n145843                  7                       cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\n",
+      "name": "phoenix-gpu14-running-array-task"
+    },
+    {
+      "cmd": "squeue -h -w gpu05 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w gpu05 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [],
+      "host": "phoenix",
+      "input": "\n---ALLOC---\n\n",
+      "name": "phoenix-gpu05-idle-empty"
+    },
+    {
+      "cmd": "squeue -h -w gpu03 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w gpu03 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [
+        {
+          "cpus": "96",
+          "elapsed": "3-08:14:22",
+          "jobId": "145701",
+          "name": "train_dalle3",
+          "nodeCount": "1",
+          "partition": "gpu-long",
+          "timeLimit": "7-00:00:00",
+          "tres": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8",
+          "user": "alice.chen"
+        }
+      ],
+      "host": "phoenix",
+      "input": "145701|alice.chen|train_dalle3|gpu-long|3-08:14:22|7-00:00:00|1|96|gres/gpu:h100=8\n---ALLOC---\n145701                  N/A                     cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\n",
+      "name": "phoenix-gpu03-single-tenant"
+    },
+    {
+      "cmd": "squeue -h -w gpu02 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w gpu02 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [
+        {
+          "cpus": "16",
+          "elapsed": "4:08:12",
+          "jobId": "92347",
+          "name": "hp_search_run3",
+          "nodeCount": "1",
+          "partition": "gpu",
+          "timeLimit": "12:00:00",
+          "tres": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1",
+          "user": "r.shaw"
+        }
+      ],
+      "host": "nimbus",
+      "input": "92347|r.shaw|hp_search_run3|gpu|4:08:12|12:00:00|1|16|gres/gpu:l40s=1\n---ALLOC---\n92347                   N/A                     cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\n",
+      "name": "nimbus-gpu02"
+    },
+    {
+      "cmd": "squeue -h -w cpu03 -t RUNNING -o '%i|%u|%j|%P|%M|%l|%D|%C|%b'; echo '---ALLOC---'; squeue -h -w cpu03 -t RUNNING -O ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "expected": [
+        {
+          "cpus": "32",
+          "elapsed": "1:23:45",
+          "jobId": "92341",
+          "name": "data_preprocess",
+          "nodeCount": "1",
+          "partition": "cpu",
+          "timeLimit": "4:00:00",
+          "tres": "cpu=32,mem=128G,node=1",
+          "user": "r.shaw"
+        }
+      ],
+      "host": "nimbus",
+      "input": "92341|r.shaw|data_preprocess|cpu|1:23:45|4:00:00|1|32|\n---ALLOC---\n92341                   N/A                     cpu=32,mem=128G,node=1\n",
+      "name": "nimbus-cpu03-no-gpu"
+    }
+  ],
+  "kind": "node-jobs",
+  "version": 1
+}

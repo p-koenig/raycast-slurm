@@ -2,7 +2,18 @@ import { useEffect, useState } from "react";
 import { Action, ActionPanel, List, Icon, Color } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { readLogTail, showJob, streamJobMetrics } from "../slurm";
-import { type GpuSample, type MetricSample, gpuCount, parseMetricStream, windowAvg, windowSeconds } from "../metrics";
+import {
+  type GpuSample,
+  type MetricSample,
+  type RunStats,
+  accumulate,
+  gpuCount,
+  gpuKey,
+  parseMetricStream,
+  runAvg,
+  windowAvg,
+  windowSeconds,
+} from "../metrics";
 import { DEMO_MODE, isDemoHost, mockMetricSample } from "../demo";
 import {
   buildJobTime,
@@ -156,11 +167,14 @@ function UtilizationDetail({ host, jobId, fields, owned }: SectionProps) {
 }
 
 // Cap on retained samples (~5 min at 1 Hz). Bounds memory the same way TailView
-// caps its line buffer; the run average becomes a rolling 5-min figure past that.
+// caps its line buffer. Only the trailing window and the "latest GPU set" lookups
+// read this array, so the cap never truncates the run average — that comes from
+// the RunStats accumulator, which folds in every tick before the slice.
 const MAX_SAMPLES = 300;
 
 function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
   const [samples, setSamples] = useState<MetricSample[]>([]);
+  const [stats, setStats] = useState<RunStats>(() => new Map());
   const [openedAt] = useState(() => Date.now());
   const [now, setNow] = useState(() => Date.now());
   const [error, setError] = useState<string | null>(null);
@@ -171,7 +185,9 @@ function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
     if (DEMO_MODE && isDemoHost(host)) {
       const push = () => {
         const s = mockMetricSample(host, jobId);
-        if (s) setSamples((prev) => [...prev, s].slice(-MAX_SAMPLES));
+        if (!s) return;
+        setSamples((prev) => [...prev, s].slice(-MAX_SAMPLES));
+        setStats((prev) => accumulate(prev, [s]));
       };
       push();
       const demoTick = setInterval(() => {
@@ -186,7 +202,9 @@ function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
     proc.stdout?.on("data", (chunk: Buffer) => {
       const { samples: parsed, rest } = parseMetricStream(buffer + chunk.toString());
       buffer = rest;
-      if (parsed.length) setSamples((prev) => [...prev, ...parsed].slice(-MAX_SAMPLES));
+      if (!parsed.length) return;
+      setSamples((prev) => [...prev, ...parsed].slice(-MAX_SAMPLES));
+      setStats((prev) => accumulate(prev, parsed));
     });
     proc.stderr?.on("data", (chunk: Buffer) => {
       const text = chunk.toString().trim();
@@ -230,8 +248,26 @@ function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
         icon={Icon.ComputerChip}
         key={`gpu-${g.index}-name`}
       />,
-      metricRow("Utilization", samples, sinceWindow, winSec, (s) => gpuPick(s, g.index, "util"), `gpu-${g.index}-util`),
-      metricRow("VRAM", samples, sinceWindow, winSec, (s) => gpuPick(s, g.index, "memPct"), `gpu-${g.index}-vram`),
+      metricRow(
+        "Utilization",
+        samples,
+        stats,
+        gpuKey(g.index, "util"),
+        sinceWindow,
+        winSec,
+        (s) => gpuPick(s, g.index, "util"),
+        `gpu-${g.index}-util`,
+      ),
+      metricRow(
+        "VRAM",
+        samples,
+        stats,
+        gpuKey(g.index, "memPct"),
+        sinceWindow,
+        winSec,
+        (s) => gpuPick(s, g.index, "memPct"),
+        `gpu-${g.index}-vram`,
+      ),
     );
   }
   if (nGpu === 0) {
@@ -243,24 +279,28 @@ function LiveUtilization({ host, jobId }: { host: string; jobId: string }) {
 
   rows.push(
     <List.Item.Detail.Metadata.Separator key="host-sep" />,
-    metricRow("CPU", samples, sinceWindow, winSec, (s) => s.cpu, "cpu"),
-    metricRow("RAM", samples, sinceWindow, winSec, (s) => s.ram, "ram"),
+    metricRow("CPU", samples, stats, "cpu", sinceWindow, winSec, (s) => s.cpu, "cpu"),
+    metricRow("RAM", samples, stats, "ram", sinceWindow, winSec, (s) => s.ram, "ram"),
   );
 
   return <List.Item.Detail metadata={<List.Item.Detail.Metadata>{rows}</List.Item.Detail.Metadata>} />;
 }
 
-// One labelled row carrying two pills: the run average (whole session) and the
-// trailing-window average (≤30 s), each tinted by its own value.
+// One labelled row carrying two pills: the run average (every tick since the
+// view opened, from RunStats) and the trailing-window average (≤30 s, from the
+// retained samples), each tinted by its own value. `runKey` selects the series
+// in RunStats; `pick` reads the same series out of a sample for the window.
 function metricRow(
   title: string,
   samples: MetricSample[],
+  stats: RunStats,
+  runKey: string,
   sinceWindow: number,
   winSec: number,
   pick: (s: MetricSample) => number | null,
   key: string,
 ) {
-  const run = windowAvg(samples, 0, pick);
+  const run = runAvg(stats, runKey);
   const win = windowAvg(samples, sinceWindow, pick);
   return (
     <List.Item.Detail.Metadata.TagList title={title} key={key}>

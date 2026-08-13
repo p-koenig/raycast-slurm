@@ -1,0 +1,104 @@
+name: macOS app
+
+# Gates the native SlurmBar app and the cross-language parity contract.
+# This workflow deliberately does NOT gate the Raycast extension's own lint/build —
+# that stays the extension's concern (ARCHITECTURE.md § "Testing & CI").
+
+on:
+  push:
+    paths:
+      - "macos/**"
+      - "fixtures/**"
+      - "scripts/**"
+      - "src/lib/**"
+      - ".github/workflows/macos-app.yml"
+  pull_request:
+    paths:
+      - "macos/**"
+      - "fixtures/**"
+      - "scripts/**"
+      - "src/lib/**"
+      - ".github/workflows/macos-app.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macos-app-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fixtures:
+    name: Fixtures match the TS parsers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      # Re-runs the TypeScript exporter over the demo corpus. The `export-fixtures`
+      # script is added by Phase 1a; until then this step fails, which is expected.
+      - run: npm run export-fixtures
+
+      # The exporter must be deterministic and the checked-in fixtures must already be
+      # current — otherwise the Swift golden tests are validating stale expectations.
+      - name: Fail if fixtures drifted
+        run: git diff --exit-code -- fixtures/
+
+  slurmkit:
+    name: SlurmKit tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: swift --version
+
+      # Wrapper around `swift test --package-path macos/SlurmKit`. On a runner with Xcode
+      # it adds nothing but a guard that fails the job if SwiftPM silently executes zero
+      # tests (see the script header for how that happens).
+      - name: swift test
+        run: macos/scripts/test-slurmkit.sh
+
+  slurmbar-app:
+    name: SlurmBar app builds
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: xcodebuild -version
+
+      # XcodeGen is preinstalled on the GitHub macOS images; the script installs it via
+      # Homebrew if it is not, and generates SlurmBar.xcodeproj from macos/project.yml
+      # (the .xcodeproj is gitignored — project.yml is the source of truth).
+      - name: Generate the Xcode project
+        run: macos/scripts/generate-project.sh
+
+      # Ad-hoc/unsigned Debug build. Signing lands in Phase 5 with the Developer Program.
+      - name: Build the app
+        run: macos/scripts/build-app.sh Debug
+
+      # Headless render of every key screen through SwiftUI's ImageRenderer, in demo mode.
+      # It never opens an SSH connection — the transport is DemoTransport over the same
+      # `fixtures/` the golden tests use — and it exits non-zero if a screen fails to
+      # render or if the demo clusters never answer. That makes it a real gate on the view
+      # layer, not just a screenshot tool.
+      - name: Render screen snapshots (demo mode)
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/slurmbar-snapshots"
+          mkdir -p "$out"
+          SLURMBAR_SNAPSHOT_DIR="$out" \
+            macos/.build/DerivedData/Build/Products/Debug/SlurmBar.app/Contents/MacOS/SlurmBar
+          ls -l "$out"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: slurmbar-snapshots
+          path: ${{ runner.temp }}/slurmbar-snapshots/*.png
+          if-no-files-found: error

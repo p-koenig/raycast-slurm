@@ -1,0 +1,4889 @@
+{
+  "cases": [
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": ""
+      },
+      "name": "gpuCountFromTres \"\""
+    },
+    {
+      "expected": 8,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=128,mem=800G,gres/gpu=8"
+      },
+      "name": "gpuCountFromTres \"cpu=128,mem=800G,gres/gpu=8\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=150G,gres/gpu=1"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=150G,gres/gpu=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=64G"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=64G\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=64G,gres/gpu=1"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=64G,gres/gpu=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=64G,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=64G,node=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=96G,gres/gpu=2"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=96G,gres/gpu=2\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2\""
+    },
+    {
+      "expected": 14,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14"
+      },
+      "name": "gpuCountFromTres \"cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=24,mem=96G"
+      },
+      "name": "gpuCountFromTres \"cpu=24,mem=96G\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=128G"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=128G\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=128G,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=128G,node=1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=290G,gres/gpu=2"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=290G,gres/gpu=2\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=300G,gres/gpu=2"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=300G,gres/gpu=2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=32,mem=96G"
+      },
+      "name": "gpuCountFromTres \"cpu=32,mem=96G\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=4,mem=32G,gres/gpu=1"
+      },
+      "name": "gpuCountFromTres \"cpu=4,mem=32G,gres/gpu=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuCountFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=48,mem=192G"
+      },
+      "name": "gpuCountFromTres \"cpu=48,mem=192G\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=48,mem=192G,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=48,mem=192G,node=1\""
+    },
+    {
+      "expected": 3,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3"
+      },
+      "name": "gpuCountFromTres \"cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\""
+    },
+    {
+      "expected": 3,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=48,mem=350G,gres/gpu=3"
+      },
+      "name": "gpuCountFromTres \"cpu=48,mem=350G,gres/gpu=3\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=64,mem=400G,gres/gpu=4"
+      },
+      "name": "gpuCountFromTres \"cpu=64,mem=400G,gres/gpu=4\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=64,mem=450G,gres/gpu=4"
+      },
+      "name": "gpuCountFromTres \"cpu=64,mem=450G,gres/gpu=4\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=64,mem=480G,gres/gpu=4"
+      },
+      "name": "gpuCountFromTres \"cpu=64,mem=480G,gres/gpu=4\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=100G,gres/gpu=2"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=100G,gres/gpu=2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=32G"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=32G\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=32G,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=32G,node=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=48G,gres/gpu=1"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=48G,gres/gpu=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": 7,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=96,mem=600G,gres/gpu=7"
+      },
+      "name": "gpuCountFromTres \"cpu=96,mem=600G,gres/gpu=7\""
+    },
+    {
+      "expected": 7,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=96,mem=640G,gres/gpu=7"
+      },
+      "name": "gpuCountFromTres \"cpu=96,mem=640G,gres/gpu=7\""
+    },
+    {
+      "expected": 8,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8"
+      },
+      "name": "gpuCountFromTres \"cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:a100=1"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:a100=1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:a100=2"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:a100=2\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:h100=4"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:h100=4\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:l40s=1"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:l40s=1\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4"
+      },
+      "name": "gpuCountFromTres \"cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=8,gres/gpu:a100=0"
+      },
+      "name": "gpuCountFromTres \"cpu=8,gres/gpu:a100=0\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=2"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=128G,gres/gpu=2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=0"
+      },
+      "name": "gpuCountFromTres \"cpu=16,mem=128G,gres/gpu=0\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:A100:4"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:A100:4\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:2g.10gb:1"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:2g.10gb:1\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:1"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gres/gpu:0"
+      },
+      "name": "gpuCountFromTres \"gres/gpu:0\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gpu:a100:2"
+      },
+      "name": "gpuCountFromTres \"gpu:a100:2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gpu:8"
+      },
+      "name": "gpuCountFromTres \"gpu:8\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gpu:a100:4(S:0-1)"
+      },
+      "name": "gpuCountFromTres \"gpu:a100:4(S:0-1)\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "gpu:rtx2080ti:2"
+      },
+      "name": "gpuCountFromTres \"gpu:rtx2080ti:2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=1024M"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=1024M\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=1536M"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=1536M\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=100M"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=100M\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=512"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=512\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=1T"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=1T\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=1,mem=64G,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=1,mem=64G,node=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "mem=0M"
+      },
+      "name": "gpuCountFromTres \"mem=0M\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "N/A"
+      },
+      "name": "gpuCountFromTres \"N/A\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "(null)"
+      },
+      "name": "gpuCountFromTres \"(null)\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "cpu=4,node=1"
+      },
+      "name": "gpuCountFromTres \"cpu=4,node=1\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromTres",
+        "input": "billing=8,cpu=8"
+      },
+      "name": "gpuCountFromTres \"billing=8,cpu=8\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": ""
+      },
+      "name": "memFromTres \"\""
+    },
+    {
+      "expected": "800G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=128,mem=800G,gres/gpu=8"
+      },
+      "name": "memFromTres \"cpu=128,mem=800G,gres/gpu=8\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "memFromTres \"cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "memFromTres \"cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": "150G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=150G,gres/gpu=1"
+      },
+      "name": "memFromTres \"cpu=16,mem=150G,gres/gpu=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=64G"
+      },
+      "name": "memFromTres \"cpu=16,mem=64G\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=64G,gres/gpu=1"
+      },
+      "name": "memFromTres \"cpu=16,mem=64G,gres/gpu=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=64G,node=1"
+      },
+      "name": "memFromTres \"cpu=16,mem=64G,node=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "memFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "96G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=96G,gres/gpu=2"
+      },
+      "name": "memFromTres \"cpu=16,mem=96G,gres/gpu=2\""
+    },
+    {
+      "expected": "96G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2"
+      },
+      "name": "memFromTres \"cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2\""
+    },
+    {
+      "expected": "1280G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14"
+      },
+      "name": "memFromTres \"cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\""
+    },
+    {
+      "expected": "16G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "96G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=24,mem=96G"
+      },
+      "name": "memFromTres \"cpu=24,mem=96G\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=128G"
+      },
+      "name": "memFromTres \"cpu=32,mem=128G\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=128G,node=1"
+      },
+      "name": "memFromTres \"cpu=32,mem=128G,node=1\""
+    },
+    {
+      "expected": "180G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2"
+      },
+      "name": "memFromTres \"cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\""
+    },
+    {
+      "expected": "200G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1"
+      },
+      "name": "memFromTres \"cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\""
+    },
+    {
+      "expected": "240G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "memFromTres \"cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": "290G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=290G,gres/gpu=2"
+      },
+      "name": "memFromTres \"cpu=32,mem=290G,gres/gpu=2\""
+    },
+    {
+      "expected": "300G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=300G,gres/gpu=2"
+      },
+      "name": "memFromTres \"cpu=32,mem=300G,gres/gpu=2\""
+    },
+    {
+      "expected": "96G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=32,mem=96G"
+      },
+      "name": "memFromTres \"cpu=32,mem=96G\""
+    },
+    {
+      "expected": "32G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=4,mem=32G,gres/gpu=1"
+      },
+      "name": "memFromTres \"cpu=4,mem=32G,gres/gpu=1\""
+    },
+    {
+      "expected": "32G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "32G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "memFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "192G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=48,mem=192G"
+      },
+      "name": "memFromTres \"cpu=48,mem=192G\""
+    },
+    {
+      "expected": "192G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=48,mem=192G,node=1"
+      },
+      "name": "memFromTres \"cpu=48,mem=192G,node=1\""
+    },
+    {
+      "expected": "320G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3"
+      },
+      "name": "memFromTres \"cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\""
+    },
+    {
+      "expected": "350G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=48,mem=350G,gres/gpu=3"
+      },
+      "name": "memFromTres \"cpu=48,mem=350G,gres/gpu=3\""
+    },
+    {
+      "expected": "400G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=64,mem=400G,gres/gpu=4"
+      },
+      "name": "memFromTres \"cpu=64,mem=400G,gres/gpu=4\""
+    },
+    {
+      "expected": "450G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=64,mem=450G,gres/gpu=4"
+      },
+      "name": "memFromTres \"cpu=64,mem=450G,gres/gpu=4\""
+    },
+    {
+      "expected": "480G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=64,mem=480G,gres/gpu=4"
+      },
+      "name": "memFromTres \"cpu=64,mem=480G,gres/gpu=4\""
+    },
+    {
+      "expected": "100G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=100G,gres/gpu=2"
+      },
+      "name": "memFromTres \"cpu=8,mem=100G,gres/gpu=2\""
+    },
+    {
+      "expected": "32G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=32G"
+      },
+      "name": "memFromTres \"cpu=8,mem=32G\""
+    },
+    {
+      "expected": "32G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=32G,node=1"
+      },
+      "name": "memFromTres \"cpu=8,mem=32G,node=1\""
+    },
+    {
+      "expected": "48G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=48G,gres/gpu=1"
+      },
+      "name": "memFromTres \"cpu=8,mem=48G,gres/gpu=1\""
+    },
+    {
+      "expected": "48G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "memFromTres \"cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "memFromTres \"cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": "80G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "600G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=96,mem=600G,gres/gpu=7"
+      },
+      "name": "memFromTres \"cpu=96,mem=600G,gres/gpu=7\""
+    },
+    {
+      "expected": "640G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=96,mem=640G,gres/gpu=7"
+      },
+      "name": "memFromTres \"cpu=96,mem=640G,gres/gpu=7\""
+    },
+    {
+      "expected": "720G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8"
+      },
+      "name": "memFromTres \"cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:a100=1"
+      },
+      "name": "memFromTres \"gres/gpu:a100=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:a100=2"
+      },
+      "name": "memFromTres \"gres/gpu:a100=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:h100=4"
+      },
+      "name": "memFromTres \"gres/gpu:h100=4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:l40s=1"
+      },
+      "name": "memFromTres \"gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "512G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4"
+      },
+      "name": "memFromTres \"cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=8,gres/gpu:a100=0"
+      },
+      "name": "memFromTres \"cpu=8,gres/gpu:a100=0\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=2"
+      },
+      "name": "memFromTres \"cpu=16,mem=128G,gres/gpu=2\""
+    },
+    {
+      "expected": "128G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=0"
+      },
+      "name": "memFromTres \"cpu=16,mem=128G,gres/gpu=0\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:A100:4"
+      },
+      "name": "memFromTres \"gres/gpu:A100:4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:2g.10gb:1"
+      },
+      "name": "memFromTres \"gres/gpu:2g.10gb:1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:1"
+      },
+      "name": "memFromTres \"gres/gpu:1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gres/gpu:0"
+      },
+      "name": "memFromTres \"gres/gpu:0\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gpu:a100:2"
+      },
+      "name": "memFromTres \"gpu:a100:2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gpu:8"
+      },
+      "name": "memFromTres \"gpu:8\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gpu:a100:4(S:0-1)"
+      },
+      "name": "memFromTres \"gpu:a100:4(S:0-1)\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "gpu:rtx2080ti:2"
+      },
+      "name": "memFromTres \"gpu:rtx2080ti:2\""
+    },
+    {
+      "expected": "1G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=1024M"
+      },
+      "name": "memFromTres \"cpu=1,mem=1024M\""
+    },
+    {
+      "expected": "1.5G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=1536M"
+      },
+      "name": "memFromTres \"cpu=1,mem=1536M\""
+    },
+    {
+      "expected": "100M",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=100M"
+      },
+      "name": "memFromTres \"cpu=1,mem=100M\""
+    },
+    {
+      "expected": "512M",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=512"
+      },
+      "name": "memFromTres \"cpu=1,mem=512\""
+    },
+    {
+      "expected": "1T",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=1T"
+      },
+      "name": "memFromTres \"cpu=1,mem=1T\""
+    },
+    {
+      "expected": "64G",
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=1,mem=64G,node=1"
+      },
+      "name": "memFromTres \"cpu=1,mem=64G,node=1\""
+    },
+    {
+      "expected": "0M",
+      "input": {
+        "fn": "memFromTres",
+        "input": "mem=0M"
+      },
+      "name": "memFromTres \"mem=0M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "N/A"
+      },
+      "name": "memFromTres \"N/A\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "(null)"
+      },
+      "name": "memFromTres \"(null)\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "cpu=4,node=1"
+      },
+      "name": "memFromTres \"cpu=4,node=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "memFromTres",
+        "input": "billing=8,cpu=8"
+      },
+      "name": "memFromTres \"billing=8,cpu=8\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": ""
+      },
+      "name": "gpuLabelFromTres \"\""
+    },
+    {
+      "expected": "8 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=128,mem=800G,gres/gpu=8"
+      },
+      "name": "gpuLabelFromTres \"cpu=128,mem=800G,gres/gpu=8\""
+    },
+    {
+      "expected": "2×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": "4×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": "1 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=150G,gres/gpu=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=150G,gres/gpu=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=64G"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=64G\""
+    },
+    {
+      "expected": "1 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=64G,gres/gpu=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=64G,gres/gpu=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=64G,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=64G,node=1\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "1×L40s",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "2 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=96G,gres/gpu=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=96G,gres/gpu=2\""
+    },
+    {
+      "expected": "2×L40s",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2\""
+    },
+    {
+      "expected": "14×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14"
+      },
+      "name": "gpuLabelFromTres \"cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=24,mem=96G"
+      },
+      "name": "gpuLabelFromTres \"cpu=24,mem=96G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=128G"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=128G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=128G,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=128G,node=1\""
+    },
+    {
+      "expected": "2×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\""
+    },
+    {
+      "expected": "1×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\""
+    },
+    {
+      "expected": "4×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": "2 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=290G,gres/gpu=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=290G,gres/gpu=2\""
+    },
+    {
+      "expected": "2 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=300G,gres/gpu=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=300G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=32,mem=96G"
+      },
+      "name": "gpuLabelFromTres \"cpu=32,mem=96G\""
+    },
+    {
+      "expected": "1 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=4,mem=32G,gres/gpu=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=4,mem=32G,gres/gpu=1\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "1×L40s",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=48,mem=192G"
+      },
+      "name": "gpuLabelFromTres \"cpu=48,mem=192G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=48,mem=192G,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=48,mem=192G,node=1\""
+    },
+    {
+      "expected": "3×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3"
+      },
+      "name": "gpuLabelFromTres \"cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\""
+    },
+    {
+      "expected": "3 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=48,mem=350G,gres/gpu=3"
+      },
+      "name": "gpuLabelFromTres \"cpu=48,mem=350G,gres/gpu=3\""
+    },
+    {
+      "expected": "4 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=64,mem=400G,gres/gpu=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=64,mem=400G,gres/gpu=4\""
+    },
+    {
+      "expected": "4 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=64,mem=450G,gres/gpu=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=64,mem=450G,gres/gpu=4\""
+    },
+    {
+      "expected": "4 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=64,mem=480G,gres/gpu=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=64,mem=480G,gres/gpu=4\""
+    },
+    {
+      "expected": "2 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=100G,gres/gpu=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=100G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=32G"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=32G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=32G,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=32G,node=1\""
+    },
+    {
+      "expected": "1 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=48G,gres/gpu=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=48G,gres/gpu=1\""
+    },
+    {
+      "expected": "1×L40s",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "2×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": "7 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=96,mem=600G,gres/gpu=7"
+      },
+      "name": "gpuLabelFromTres \"cpu=96,mem=600G,gres/gpu=7\""
+    },
+    {
+      "expected": "7 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=96,mem=640G,gres/gpu=7"
+      },
+      "name": "gpuLabelFromTres \"cpu=96,mem=640G,gres/gpu=7\""
+    },
+    {
+      "expected": "8×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8"
+      },
+      "name": "gpuLabelFromTres \"cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\""
+    },
+    {
+      "expected": "1×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:a100=1"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:a100=1\""
+    },
+    {
+      "expected": "2×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:a100=2"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:a100=2\""
+    },
+    {
+      "expected": "4×H100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:h100=4"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:h100=4\""
+    },
+    {
+      "expected": "1×L40s",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:l40s=1"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:l40s=1\""
+    },
+    {
+      "expected": "4×Rtx Pro 6000",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4"
+      },
+      "name": "gpuLabelFromTres \"cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=8,gres/gpu:a100=0"
+      },
+      "name": "gpuLabelFromTres \"cpu=8,gres/gpu:a100=0\""
+    },
+    {
+      "expected": "2 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=2"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=128G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=0"
+      },
+      "name": "gpuLabelFromTres \"cpu=16,mem=128G,gres/gpu=0\""
+    },
+    {
+      "expected": "4×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:A100:4"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:A100:4\""
+    },
+    {
+      "expected": "1×2g.10gb",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:2g.10gb:1"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:2g.10gb:1\""
+    },
+    {
+      "expected": "1 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:1"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gres/gpu:0"
+      },
+      "name": "gpuLabelFromTres \"gres/gpu:0\""
+    },
+    {
+      "expected": "2×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gpu:a100:2"
+      },
+      "name": "gpuLabelFromTres \"gpu:a100:2\""
+    },
+    {
+      "expected": "8 GPU",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gpu:8"
+      },
+      "name": "gpuLabelFromTres \"gpu:8\""
+    },
+    {
+      "expected": "4×A100",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gpu:a100:4(S:0-1)"
+      },
+      "name": "gpuLabelFromTres \"gpu:a100:4(S:0-1)\""
+    },
+    {
+      "expected": "2×Rtx2080ti",
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "gpu:rtx2080ti:2"
+      },
+      "name": "gpuLabelFromTres \"gpu:rtx2080ti:2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=1024M"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=1024M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=1536M"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=1536M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=100M"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=100M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=512"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=512\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=1T"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=1T\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=1,mem=64G,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=1,mem=64G,node=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "mem=0M"
+      },
+      "name": "gpuLabelFromTres \"mem=0M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "N/A"
+      },
+      "name": "gpuLabelFromTres \"N/A\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "(null)"
+      },
+      "name": "gpuLabelFromTres \"(null)\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "cpu=4,node=1"
+      },
+      "name": "gpuLabelFromTres \"cpu=4,node=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuLabelFromTres",
+        "input": "billing=8,cpu=8"
+      },
+      "name": "gpuLabelFromTres \"billing=8,cpu=8\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": ""
+      },
+      "name": "gpuInfoFromTres \"\""
+    },
+    {
+      "expected": {
+        "count": 8,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=128,mem=800G,gres/gpu=8"
+      },
+      "name": "gpuInfoFromTres \"cpu=128,mem=800G,gres/gpu=8\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=128G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=128G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=150G,gres/gpu=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=150G,gres/gpu=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=64G"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=64G\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=64G,gres/gpu=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=64G,gres/gpu=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=64G,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=64G,node=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "l40s"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=64G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=96G,gres/gpu=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=96G,gres/gpu=2\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "l40s"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=96G,node=1,gres/gpu=2,gres/gpu:l40s=2\""
+    },
+    {
+      "expected": {
+        "count": 14,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14"
+      },
+      "name": "gpuInfoFromTres \"cpu=192,mem=1280G,node=2,gres/gpu=14,gres/gpu:h100=14\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=2,mem=16G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=24,mem=96G"
+      },
+      "name": "gpuInfoFromTres \"cpu=24,mem=96G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=128G"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=128G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=128G,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=128G,node=1\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=180G,node=1,gres/gpu=2,gres/gpu:h100=2\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=200G,node=1,gres/gpu=1,gres/gpu:h100=1\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=240G,node=1,gres/gpu=4,gres/gpu:h100=4\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=290G,gres/gpu=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=290G,gres/gpu=2\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=300G,gres/gpu=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=300G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=32,mem=96G"
+      },
+      "name": "gpuInfoFromTres \"cpu=32,mem=96G\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=4,mem=32G,gres/gpu=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=4,mem=32G,gres/gpu=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "l40s"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=4,mem=32G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=48,mem=192G"
+      },
+      "name": "gpuInfoFromTres \"cpu=48,mem=192G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=48,mem=192G,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=48,mem=192G,node=1\""
+    },
+    {
+      "expected": {
+        "count": 3,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3"
+      },
+      "name": "gpuInfoFromTres \"cpu=48,mem=320G,node=1,gres/gpu=3,gres/gpu:a100=3\""
+    },
+    {
+      "expected": {
+        "count": 3,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=48,mem=350G,gres/gpu=3"
+      },
+      "name": "gpuInfoFromTres \"cpu=48,mem=350G,gres/gpu=3\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=64,mem=400G,gres/gpu=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=64,mem=400G,gres/gpu=4\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=64,mem=450G,gres/gpu=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=64,mem=450G,gres/gpu=4\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=64,mem=480G,gres/gpu=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=64,mem=480G,gres/gpu=4\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=100G,gres/gpu=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=100G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=32G"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=32G\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=32G,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=32G,node=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=48G,gres/gpu=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=48G,gres/gpu=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "l40s"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=48G,node=1,gres/gpu=1,gres/gpu:l40s=1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=64G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=64G,node=1,gres/gpu=2,gres/gpu:a100=2\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,mem=80G,node=1,gres/gpu=1,gres/gpu:a100=1\""
+    },
+    {
+      "expected": {
+        "count": 7,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=96,mem=600G,gres/gpu=7"
+      },
+      "name": "gpuInfoFromTres \"cpu=96,mem=600G,gres/gpu=7\""
+    },
+    {
+      "expected": {
+        "count": 7,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=96,mem=640G,gres/gpu=7"
+      },
+      "name": "gpuInfoFromTres \"cpu=96,mem=640G,gres/gpu=7\""
+    },
+    {
+      "expected": {
+        "count": 8,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8"
+      },
+      "name": "gpuInfoFromTres \"cpu=96,mem=720G,node=1,gres/gpu=8,gres/gpu:h100=8\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:a100=1"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:a100=1\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:a100=2"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:a100=2\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "h100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:h100=4"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:h100=4\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "l40s"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:l40s=1"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:l40s=1\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "rtx_pro_6000"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4"
+      },
+      "name": "gpuInfoFromTres \"cpu=64,mem=512G,node=1,gres/gpu=4,gres/gpu:rtx_pro_6000=4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=8,gres/gpu:a100=0"
+      },
+      "name": "gpuInfoFromTres \"cpu=8,gres/gpu:a100=0\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=2"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=128G,gres/gpu=2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=16,mem=128G,gres/gpu=0"
+      },
+      "name": "gpuInfoFromTres \"cpu=16,mem=128G,gres/gpu=0\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "A100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:A100:4"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:A100:4\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": "2g.10gb"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:2g.10gb:1"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:2g.10gb:1\""
+    },
+    {
+      "expected": {
+        "count": 1,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:1"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gres/gpu:0"
+      },
+      "name": "gpuInfoFromTres \"gres/gpu:0\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gpu:a100:2"
+      },
+      "name": "gpuInfoFromTres \"gpu:a100:2\""
+    },
+    {
+      "expected": {
+        "count": 8,
+        "type": null
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gpu:8"
+      },
+      "name": "gpuInfoFromTres \"gpu:8\""
+    },
+    {
+      "expected": {
+        "count": 4,
+        "type": "a100"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gpu:a100:4(S:0-1)"
+      },
+      "name": "gpuInfoFromTres \"gpu:a100:4(S:0-1)\""
+    },
+    {
+      "expected": {
+        "count": 2,
+        "type": "rtx2080ti"
+      },
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "gpu:rtx2080ti:2"
+      },
+      "name": "gpuInfoFromTres \"gpu:rtx2080ti:2\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=1024M"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=1024M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=1536M"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=1536M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=100M"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=100M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=512"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=512\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=1T"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=1T\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=1,mem=64G,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=1,mem=64G,node=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "mem=0M"
+      },
+      "name": "gpuInfoFromTres \"mem=0M\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "N/A"
+      },
+      "name": "gpuInfoFromTres \"N/A\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "(null)"
+      },
+      "name": "gpuInfoFromTres \"(null)\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "cpu=4,node=1"
+      },
+      "name": "gpuInfoFromTres \"cpu=4,node=1\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "gpuInfoFromTres",
+        "input": "billing=8,cpu=8"
+      },
+      "name": "gpuInfoFromTres \"billing=8,cpu=8\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": ""
+      },
+      "name": "gpuCountFromGres \"\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:0"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:0\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:1"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:2"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:2\""
+    },
+    {
+      "expected": 3,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:3"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:3\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:4"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:4\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:h100:0"
+      },
+      "name": "gpuCountFromGres \"gpu:h100:0\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:h100:2"
+      },
+      "name": "gpuCountFromGres \"gpu:h100:2\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:h100:4"
+      },
+      "name": "gpuCountFromGres \"gpu:h100:4\""
+    },
+    {
+      "expected": 7,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:h100:7"
+      },
+      "name": "gpuCountFromGres \"gpu:h100:7\""
+    },
+    {
+      "expected": 8,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:h100:8"
+      },
+      "name": "gpuCountFromGres \"gpu:h100:8\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:l40s:0"
+      },
+      "name": "gpuCountFromGres \"gpu:l40s:0\""
+    },
+    {
+      "expected": 1,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:l40s:1"
+      },
+      "name": "gpuCountFromGres \"gpu:l40s:1\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:l40s:2"
+      },
+      "name": "gpuCountFromGres \"gpu:l40s:2\""
+    },
+    {
+      "expected": 4,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:a100:4(S:0-1)"
+      },
+      "name": "gpuCountFromGres \"gpu:a100:4(S:0-1)\""
+    },
+    {
+      "expected": 8,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:8"
+      },
+      "name": "gpuCountFromGres \"gpu:8\""
+    },
+    {
+      "expected": 2,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gpu:rtx2080ti:2"
+      },
+      "name": "gpuCountFromGres \"gpu:rtx2080ti:2\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "(null)"
+      },
+      "name": "gpuCountFromGres \"(null)\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "gpuCountFromGres",
+        "input": "gres/gpu:1"
+      },
+      "name": "gpuCountFromGres \"gres/gpu:1\""
+    },
+    {
+      "expected": 5142,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "01:25:42"
+      },
+      "name": "parseSlurmDurationSeconds \"01:25:42\""
+    },
+    {
+      "expected": 9375,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "02:36:15"
+      },
+      "name": "parseSlurmDurationSeconds \"02:36:15\""
+    },
+    {
+      "expected": 13552,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "03:45:52"
+      },
+      "name": "parseSlurmDurationSeconds \"03:45:52\""
+    },
+    {
+      "expected": 15462,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "04:17:42"
+      },
+      "name": "parseSlurmDurationSeconds \"04:17:42\""
+    },
+    {
+      "expected": 20478,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "05:41:18"
+      },
+      "name": "parseSlurmDurationSeconds \"05:41:18\""
+    },
+    {
+      "expected": 20832,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "05:47:12"
+      },
+      "name": "parseSlurmDurationSeconds \"05:47:12\""
+    },
+    {
+      "expected": 25009,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "06:56:49"
+      },
+      "name": "parseSlurmDurationSeconds \"06:56:49\""
+    },
+    {
+      "expected": 28308,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "07:51:48"
+      },
+      "name": "parseSlurmDurationSeconds \"07:51:48\""
+    },
+    {
+      "expected": 34619,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "09:36:59"
+      },
+      "name": "parseSlurmDurationSeconds \"09:36:59\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:00"
+      },
+      "name": "parseSlurmDurationSeconds \"0:00\""
+    },
+    {
+      "expected": 522,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:08:42"
+      },
+      "name": "parseSlurmDurationSeconds \"0:08:42\""
+    },
+    {
+      "expected": 762,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:12:42"
+      },
+      "name": "parseSlurmDurationSeconds \"0:12:42\""
+    },
+    {
+      "expected": 1800,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:30:00"
+      },
+      "name": "parseSlurmDurationSeconds \"0:30:00\""
+    },
+    {
+      "expected": 2058,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:34:18"
+      },
+      "name": "parseSlurmDurationSeconds \"0:34:18\""
+    },
+    {
+      "expected": 2723,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0:45:23"
+      },
+      "name": "parseSlurmDurationSeconds \"0:45:23\""
+    },
+    {
+      "expected": 86400,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-00:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"1-00:00:00\""
+    },
+    {
+      "expected": 130647,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-12:17:27"
+      },
+      "name": "parseSlurmDurationSeconds \"1-12:17:27\""
+    },
+    {
+      "expected": 141465,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-15:17:45"
+      },
+      "name": "parseSlurmDurationSeconds \"1-15:17:45\""
+    },
+    {
+      "expected": 40477,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "11:14:37"
+      },
+      "name": "parseSlurmDurationSeconds \"11:14:37\""
+    },
+    {
+      "expected": 42153,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "11:42:33"
+      },
+      "name": "parseSlurmDurationSeconds \"11:42:33\""
+    },
+    {
+      "expected": 43200,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "12:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"12:00:00\""
+    },
+    {
+      "expected": 51781,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "14:23:01"
+      },
+      "name": "parseSlurmDurationSeconds \"14:23:01\""
+    },
+    {
+      "expected": 56725,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "15:45:25"
+      },
+      "name": "parseSlurmDurationSeconds \"15:45:25\""
+    },
+    {
+      "expected": 64032,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "17:47:12"
+      },
+      "name": "parseSlurmDurationSeconds \"17:47:12\""
+    },
+    {
+      "expected": 64800,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "18:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"18:00:00\""
+    },
+    {
+      "expected": 66842,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "18:34:02"
+      },
+      "name": "parseSlurmDurationSeconds \"18:34:02\""
+    },
+    {
+      "expected": 3600,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"1:00:00\""
+    },
+    {
+      "expected": 3791,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1:03:11"
+      },
+      "name": "parseSlurmDurationSeconds \"1:03:11\""
+    },
+    {
+      "expected": 5025,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1:23:45"
+      },
+      "name": "parseSlurmDurationSeconds \"1:23:45\""
+    },
+    {
+      "expected": 172800,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2-00:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"2-00:00:00\""
+    },
+    {
+      "expected": 192358,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2-05:25:58"
+      },
+      "name": "parseSlurmDurationSeconds \"2-05:25:58\""
+    },
+    {
+      "expected": 224591,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2-14:23:11"
+      },
+      "name": "parseSlurmDurationSeconds \"2-14:23:11\""
+    },
+    {
+      "expected": 7200,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"2:00:00\""
+    },
+    {
+      "expected": 8048,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2:14:08"
+      },
+      "name": "parseSlurmDurationSeconds \"2:14:08\""
+    },
+    {
+      "expected": 8075,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2:14:35"
+      },
+      "name": "parseSlurmDurationSeconds \"2:14:35\""
+    },
+    {
+      "expected": 8322,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "2:18:42"
+      },
+      "name": "parseSlurmDurationSeconds \"2:18:42\""
+    },
+    {
+      "expected": 259200,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "3-00:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"3-00:00:00\""
+    },
+    {
+      "expected": 288862,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "3-08:14:22"
+      },
+      "name": "parseSlurmDurationSeconds \"3-08:14:22\""
+    },
+    {
+      "expected": 315938,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "3-15:45:38"
+      },
+      "name": "parseSlurmDurationSeconds \"3-15:45:38\""
+    },
+    {
+      "expected": 13338,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "3:42:18"
+      },
+      "name": "parseSlurmDurationSeconds \"3:42:18\""
+    },
+    {
+      "expected": 380209,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "4-09:36:49"
+      },
+      "name": "parseSlurmDurationSeconds \"4-09:36:49\""
+    },
+    {
+      "expected": 14400,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "4:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"4:00:00\""
+    },
+    {
+      "expected": 14892,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "4:08:12"
+      },
+      "name": "parseSlurmDurationSeconds \"4:08:12\""
+    },
+    {
+      "expected": 21600,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "6:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"6:00:00\""
+    },
+    {
+      "expected": 22368,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "6:12:48"
+      },
+      "name": "parseSlurmDurationSeconds \"6:12:48\""
+    },
+    {
+      "expected": 604800,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "7-00:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"7-00:00:00\""
+    },
+    {
+      "expected": 28800,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "8:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"8:00:00\""
+    },
+    {
+      "expected": 31335,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "8:42:15"
+      },
+      "name": "parseSlurmDurationSeconds \"8:42:15\""
+    },
+    {
+      "expected": 102191,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-04:23:11"
+      },
+      "name": "parseSlurmDurationSeconds \"1-04:23:11\""
+    },
+    {
+      "expected": 1425,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "23:45"
+      },
+      "name": "parseSlurmDurationSeconds \"23:45\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "UNLIMITED"
+      },
+      "name": "parseSlurmDurationSeconds \"UNLIMITED\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "unlimited"
+      },
+      "name": "parseSlurmDurationSeconds \"unlimited\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "not-a-duration"
+      },
+      "name": "parseSlurmDurationSeconds \"not-a-duration\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": ""
+      },
+      "name": "parseSlurmDurationSeconds \"\""
+    },
+    {
+      "expected": 0,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "00:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"00:00:00\""
+    },
+    {
+      "expected": 131400,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-12:30"
+      },
+      "name": "parseSlurmDurationSeconds \"1-12:30\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1-2-3"
+      },
+      "name": "parseSlurmDurationSeconds \"1-2-3\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "5"
+      },
+      "name": "parseSlurmDurationSeconds \"5\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "1:2:3:4"
+      },
+      "name": "parseSlurmDurationSeconds \"1:2:3:4\""
+    },
+    {
+      "expected": null,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "x-01:00:00"
+      },
+      "name": "parseSlurmDurationSeconds \"x-01:00:00\""
+    },
+    {
+      "expected": 30,
+      "input": {
+        "fn": "parseSlurmDurationSeconds",
+        "input": "0-00:00:30"
+      },
+      "name": "parseSlurmDurationSeconds \"0-00:00:30\""
+    },
+    {
+      "expected": "1h 25m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "01:25:42"
+      },
+      "name": "formatSlurmDuration \"01:25:42\""
+    },
+    {
+      "expected": "2h 36m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "02:36:15"
+      },
+      "name": "formatSlurmDuration \"02:36:15\""
+    },
+    {
+      "expected": "3h 45m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "03:45:52"
+      },
+      "name": "formatSlurmDuration \"03:45:52\""
+    },
+    {
+      "expected": "4h 17m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "04:17:42"
+      },
+      "name": "formatSlurmDuration \"04:17:42\""
+    },
+    {
+      "expected": "5h 41m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "05:41:18"
+      },
+      "name": "formatSlurmDuration \"05:41:18\""
+    },
+    {
+      "expected": "5h 47m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "05:47:12"
+      },
+      "name": "formatSlurmDuration \"05:47:12\""
+    },
+    {
+      "expected": "6h 56m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "06:56:49"
+      },
+      "name": "formatSlurmDuration \"06:56:49\""
+    },
+    {
+      "expected": "7h 51m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "07:51:48"
+      },
+      "name": "formatSlurmDuration \"07:51:48\""
+    },
+    {
+      "expected": "9h 36m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "09:36:59"
+      },
+      "name": "formatSlurmDuration \"09:36:59\""
+    },
+    {
+      "expected": "0s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:00"
+      },
+      "name": "formatSlurmDuration \"0:00\""
+    },
+    {
+      "expected": "8m 42s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:08:42"
+      },
+      "name": "formatSlurmDuration \"0:08:42\""
+    },
+    {
+      "expected": "12m 42s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:12:42"
+      },
+      "name": "formatSlurmDuration \"0:12:42\""
+    },
+    {
+      "expected": "30m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:30:00"
+      },
+      "name": "formatSlurmDuration \"0:30:00\""
+    },
+    {
+      "expected": "34m 18s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:34:18"
+      },
+      "name": "formatSlurmDuration \"0:34:18\""
+    },
+    {
+      "expected": "45m 23s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0:45:23"
+      },
+      "name": "formatSlurmDuration \"0:45:23\""
+    },
+    {
+      "expected": "1d",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-00:00:00"
+      },
+      "name": "formatSlurmDuration \"1-00:00:00\""
+    },
+    {
+      "expected": "1d 12h 17m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-12:17:27"
+      },
+      "name": "formatSlurmDuration \"1-12:17:27\""
+    },
+    {
+      "expected": "1d 15h 17m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-15:17:45"
+      },
+      "name": "formatSlurmDuration \"1-15:17:45\""
+    },
+    {
+      "expected": "11h 14m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "11:14:37"
+      },
+      "name": "formatSlurmDuration \"11:14:37\""
+    },
+    {
+      "expected": "11h 42m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "11:42:33"
+      },
+      "name": "formatSlurmDuration \"11:42:33\""
+    },
+    {
+      "expected": "12h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "12:00:00"
+      },
+      "name": "formatSlurmDuration \"12:00:00\""
+    },
+    {
+      "expected": "14h 23m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "14:23:01"
+      },
+      "name": "formatSlurmDuration \"14:23:01\""
+    },
+    {
+      "expected": "15h 45m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "15:45:25"
+      },
+      "name": "formatSlurmDuration \"15:45:25\""
+    },
+    {
+      "expected": "17h 47m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "17:47:12"
+      },
+      "name": "formatSlurmDuration \"17:47:12\""
+    },
+    {
+      "expected": "18h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "18:00:00"
+      },
+      "name": "formatSlurmDuration \"18:00:00\""
+    },
+    {
+      "expected": "18h 34m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "18:34:02"
+      },
+      "name": "formatSlurmDuration \"18:34:02\""
+    },
+    {
+      "expected": "1h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1:00:00"
+      },
+      "name": "formatSlurmDuration \"1:00:00\""
+    },
+    {
+      "expected": "1h 3m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1:03:11"
+      },
+      "name": "formatSlurmDuration \"1:03:11\""
+    },
+    {
+      "expected": "1h 23m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1:23:45"
+      },
+      "name": "formatSlurmDuration \"1:23:45\""
+    },
+    {
+      "expected": "2d",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2-00:00:00"
+      },
+      "name": "formatSlurmDuration \"2-00:00:00\""
+    },
+    {
+      "expected": "2d 5h 25m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2-05:25:58"
+      },
+      "name": "formatSlurmDuration \"2-05:25:58\""
+    },
+    {
+      "expected": "2d 14h 23m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2-14:23:11"
+      },
+      "name": "formatSlurmDuration \"2-14:23:11\""
+    },
+    {
+      "expected": "2h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2:00:00"
+      },
+      "name": "formatSlurmDuration \"2:00:00\""
+    },
+    {
+      "expected": "2h 14m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2:14:08"
+      },
+      "name": "formatSlurmDuration \"2:14:08\""
+    },
+    {
+      "expected": "2h 14m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2:14:35"
+      },
+      "name": "formatSlurmDuration \"2:14:35\""
+    },
+    {
+      "expected": "2h 18m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "2:18:42"
+      },
+      "name": "formatSlurmDuration \"2:18:42\""
+    },
+    {
+      "expected": "3d",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "3-00:00:00"
+      },
+      "name": "formatSlurmDuration \"3-00:00:00\""
+    },
+    {
+      "expected": "3d 8h 14m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "3-08:14:22"
+      },
+      "name": "formatSlurmDuration \"3-08:14:22\""
+    },
+    {
+      "expected": "3d 15h 45m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "3-15:45:38"
+      },
+      "name": "formatSlurmDuration \"3-15:45:38\""
+    },
+    {
+      "expected": "3h 42m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "3:42:18"
+      },
+      "name": "formatSlurmDuration \"3:42:18\""
+    },
+    {
+      "expected": "4d 9h 36m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "4-09:36:49"
+      },
+      "name": "formatSlurmDuration \"4-09:36:49\""
+    },
+    {
+      "expected": "4h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "4:00:00"
+      },
+      "name": "formatSlurmDuration \"4:00:00\""
+    },
+    {
+      "expected": "4h 8m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "4:08:12"
+      },
+      "name": "formatSlurmDuration \"4:08:12\""
+    },
+    {
+      "expected": "6h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "6:00:00"
+      },
+      "name": "formatSlurmDuration \"6:00:00\""
+    },
+    {
+      "expected": "6h 12m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "6:12:48"
+      },
+      "name": "formatSlurmDuration \"6:12:48\""
+    },
+    {
+      "expected": "7d",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "7-00:00:00"
+      },
+      "name": "formatSlurmDuration \"7-00:00:00\""
+    },
+    {
+      "expected": "8h",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "8:00:00"
+      },
+      "name": "formatSlurmDuration \"8:00:00\""
+    },
+    {
+      "expected": "8h 42m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "8:42:15"
+      },
+      "name": "formatSlurmDuration \"8:42:15\""
+    },
+    {
+      "expected": "1d 4h 23m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-04:23:11"
+      },
+      "name": "formatSlurmDuration \"1-04:23:11\""
+    },
+    {
+      "expected": "23m 45s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "23:45"
+      },
+      "name": "formatSlurmDuration \"23:45\""
+    },
+    {
+      "expected": "unlimited",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "UNLIMITED"
+      },
+      "name": "formatSlurmDuration \"UNLIMITED\""
+    },
+    {
+      "expected": "unlimited",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "unlimited"
+      },
+      "name": "formatSlurmDuration \"unlimited\""
+    },
+    {
+      "expected": "not-a-duration",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "not-a-duration"
+      },
+      "name": "formatSlurmDuration \"not-a-duration\""
+    },
+    {
+      "expected": "—",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": ""
+      },
+      "name": "formatSlurmDuration \"\""
+    },
+    {
+      "expected": "0s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "00:00:00"
+      },
+      "name": "formatSlurmDuration \"00:00:00\""
+    },
+    {
+      "expected": "1d 12h 30m",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-12:30"
+      },
+      "name": "formatSlurmDuration \"1-12:30\""
+    },
+    {
+      "expected": "1-2-3",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1-2-3"
+      },
+      "name": "formatSlurmDuration \"1-2-3\""
+    },
+    {
+      "expected": "5",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "5"
+      },
+      "name": "formatSlurmDuration \"5\""
+    },
+    {
+      "expected": "1:2:3:4",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "1:2:3:4"
+      },
+      "name": "formatSlurmDuration \"1:2:3:4\""
+    },
+    {
+      "expected": "x-01:00:00",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "x-01:00:00"
+      },
+      "name": "formatSlurmDuration \"x-01:00:00\""
+    },
+    {
+      "expected": "30s",
+      "input": {
+        "fn": "formatSlurmDuration",
+        "input": "0-00:00:30"
+      },
+      "name": "formatSlurmDuration \"0-00:00:30\""
+    },
+    {
+      "expected": "0s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 0
+      },
+      "name": "formatDurationSeconds 0"
+    },
+    {
+      "expected": "0s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": -1
+      },
+      "name": "formatDurationSeconds -1"
+    },
+    {
+      "expected": "1s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 1
+      },
+      "name": "formatDurationSeconds 1"
+    },
+    {
+      "expected": "30s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 30
+      },
+      "name": "formatDurationSeconds 30"
+    },
+    {
+      "expected": "59s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 59
+      },
+      "name": "formatDurationSeconds 59"
+    },
+    {
+      "expected": "1m",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 60
+      },
+      "name": "formatDurationSeconds 60"
+    },
+    {
+      "expected": "1m 1s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 61
+      },
+      "name": "formatDurationSeconds 61"
+    },
+    {
+      "expected": "9m 59s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 599
+      },
+      "name": "formatDurationSeconds 599"
+    },
+    {
+      "expected": "59m 59s",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 3599
+      },
+      "name": "formatDurationSeconds 3599"
+    },
+    {
+      "expected": "1h",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 3600
+      },
+      "name": "formatDurationSeconds 3600"
+    },
+    {
+      "expected": "1h 1m",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 3661
+      },
+      "name": "formatDurationSeconds 3661"
+    },
+    {
+      "expected": "2h 14m",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 8045
+      },
+      "name": "formatDurationSeconds 8045"
+    },
+    {
+      "expected": "23h 59m",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 86399
+      },
+      "name": "formatDurationSeconds 86399"
+    },
+    {
+      "expected": "1d",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 86400
+      },
+      "name": "formatDurationSeconds 86400"
+    },
+    {
+      "expected": "1d 1h 1m",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 90061
+      },
+      "name": "formatDurationSeconds 90061"
+    },
+    {
+      "expected": "7d",
+      "input": {
+        "fn": "formatDurationSeconds",
+        "input": 604800
+      },
+      "name": "formatDurationSeconds 604800"
+    },
+    {
+      "expected": "0 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 0
+      },
+      "name": "formatBytesMB 0"
+    },
+    {
+      "expected": "0 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": -5
+      },
+      "name": "formatBytesMB -5"
+    },
+    {
+      "expected": "1 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1
+      },
+      "name": "formatBytesMB 1"
+    },
+    {
+      "expected": "511 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 511
+      },
+      "name": "formatBytesMB 511"
+    },
+    {
+      "expected": "512 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 512
+      },
+      "name": "formatBytesMB 512"
+    },
+    {
+      "expected": "1023 MB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1023
+      },
+      "name": "formatBytesMB 1023"
+    },
+    {
+      "expected": "1.0 GB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1024
+      },
+      "name": "formatBytesMB 1024"
+    },
+    {
+      "expected": "1.5 GB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1536
+      },
+      "name": "formatBytesMB 1536"
+    },
+    {
+      "expected": "100.0 GB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 102400
+      },
+      "name": "formatBytesMB 102400"
+    },
+    {
+      "expected": "251.0 GB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 257024
+      },
+      "name": "formatBytesMB 257024"
+    },
+    {
+      "expected": "992.0 GB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1015808
+      },
+      "name": "formatBytesMB 1015808"
+    },
+    {
+      "expected": "1.0 TB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 1048576
+      },
+      "name": "formatBytesMB 1048576"
+    },
+    {
+      "expected": "2.5 TB",
+      "input": {
+        "fn": "formatBytesMB",
+        "input": 2621440
+      },
+      "name": "formatBytesMB 2621440"
+    },
+    {
+      "expected": "—",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          0,
+          0
+        ]
+      },
+      "name": "formatPercent [0,0]"
+    },
+    {
+      "expected": "50%",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          50,
+          100
+        ]
+      },
+      "name": "formatPercent [50,100]"
+    },
+    {
+      "expected": "33%",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          1,
+          3
+        ]
+      },
+      "name": "formatPercent [1,3]"
+    },
+    {
+      "expected": "100%",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          3,
+          3
+        ]
+      },
+      "name": "formatPercent [3,3]"
+    },
+    {
+      "expected": "—",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          5,
+          0
+        ]
+      },
+      "name": "formatPercent [5,0]"
+    },
+    {
+      "expected": "65%",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          655360,
+          1015808
+        ]
+      },
+      "name": "formatPercent [655360,1015808]"
+    },
+    {
+      "expected": "88%",
+      "input": {
+        "fn": "formatPercent",
+        "input": [
+          7,
+          8
+        ]
+      },
+      "name": "formatPercent [7,8]"
+    },
+    {
+      "expected": [
+        "(AssocMaxJobsLimit)"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "(AssocMaxJobsLimit)"
+      },
+      "name": "expandHostlist \"(AssocMaxJobsLimit)\""
+    },
+    {
+      "expected": [
+        "(JobArrayTaskLimit)"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "(JobArrayTaskLimit)"
+      },
+      "name": "expandHostlist \"(JobArrayTaskLimit)\""
+    },
+    {
+      "expected": [
+        "(Priority)"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "(Priority)"
+      },
+      "name": "expandHostlist \"(Priority)\""
+    },
+    {
+      "expected": [
+        "(Resources)"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "(Resources)"
+      },
+      "name": "expandHostlist \"(Resources)\""
+    },
+    {
+      "expected": [
+        "cpu01"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu01"
+      },
+      "name": "expandHostlist \"cpu01\""
+    },
+    {
+      "expected": [
+        "cpu02"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu02"
+      },
+      "name": "expandHostlist \"cpu02\""
+    },
+    {
+      "expected": [
+        "cpu03"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu03"
+      },
+      "name": "expandHostlist \"cpu03\""
+    },
+    {
+      "expected": [
+        "cpu04"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu04"
+      },
+      "name": "expandHostlist \"cpu04\""
+    },
+    {
+      "expected": [
+        "cpu05"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu05"
+      },
+      "name": "expandHostlist \"cpu05\""
+    },
+    {
+      "expected": [
+        "cpu06"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu06"
+      },
+      "name": "expandHostlist \"cpu06\""
+    },
+    {
+      "expected": [
+        "cpu07"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu07"
+      },
+      "name": "expandHostlist \"cpu07\""
+    },
+    {
+      "expected": [
+        "cpu08"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu08"
+      },
+      "name": "expandHostlist \"cpu08\""
+    },
+    {
+      "expected": [
+        "cpu09"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu09"
+      },
+      "name": "expandHostlist \"cpu09\""
+    },
+    {
+      "expected": [
+        "cpu10"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu10"
+      },
+      "name": "expandHostlist \"cpu10\""
+    },
+    {
+      "expected": [
+        "cpu11"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu11"
+      },
+      "name": "expandHostlist \"cpu11\""
+    },
+    {
+      "expected": [
+        "cpu12"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu12"
+      },
+      "name": "expandHostlist \"cpu12\""
+    },
+    {
+      "expected": [
+        "cpu13"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu13"
+      },
+      "name": "expandHostlist \"cpu13\""
+    },
+    {
+      "expected": [
+        "cpu14"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu14"
+      },
+      "name": "expandHostlist \"cpu14\""
+    },
+    {
+      "expected": [
+        "cpu15"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu15"
+      },
+      "name": "expandHostlist \"cpu15\""
+    },
+    {
+      "expected": [
+        "cpu16"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "cpu16"
+      },
+      "name": "expandHostlist \"cpu16\""
+    },
+    {
+      "expected": [
+        "gpu01"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu01"
+      },
+      "name": "expandHostlist \"gpu01\""
+    },
+    {
+      "expected": [
+        "gpu02"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu02"
+      },
+      "name": "expandHostlist \"gpu02\""
+    },
+    {
+      "expected": [
+        "gpu03"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu03"
+      },
+      "name": "expandHostlist \"gpu03\""
+    },
+    {
+      "expected": [
+        "gpu04"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu04"
+      },
+      "name": "expandHostlist \"gpu04\""
+    },
+    {
+      "expected": [
+        "gpu05"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu05"
+      },
+      "name": "expandHostlist \"gpu05\""
+    },
+    {
+      "expected": [
+        "gpu06"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu06"
+      },
+      "name": "expandHostlist \"gpu06\""
+    },
+    {
+      "expected": [
+        "gpu07"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu07"
+      },
+      "name": "expandHostlist \"gpu07\""
+    },
+    {
+      "expected": [
+        "gpu08"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu08"
+      },
+      "name": "expandHostlist \"gpu08\""
+    },
+    {
+      "expected": [
+        "gpu09"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu09"
+      },
+      "name": "expandHostlist \"gpu09\""
+    },
+    {
+      "expected": [
+        "gpu10"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu10"
+      },
+      "name": "expandHostlist \"gpu10\""
+    },
+    {
+      "expected": [
+        "gpu11"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu11"
+      },
+      "name": "expandHostlist \"gpu11\""
+    },
+    {
+      "expected": [
+        "gpu12"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu12"
+      },
+      "name": "expandHostlist \"gpu12\""
+    },
+    {
+      "expected": [
+        "gpu13"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu13"
+      },
+      "name": "expandHostlist \"gpu13\""
+    },
+    {
+      "expected": [
+        "gpu14"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu14"
+      },
+      "name": "expandHostlist \"gpu14\""
+    },
+    {
+      "expected": [
+        "gpu15"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu15"
+      },
+      "name": "expandHostlist \"gpu15\""
+    },
+    {
+      "expected": [
+        "gpu16"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu16"
+      },
+      "name": "expandHostlist \"gpu16\""
+    },
+    {
+      "expected": [
+        "gpu01",
+        "gpu02"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[01-02]"
+      },
+      "name": "expandHostlist \"gpu[01-02]\""
+    },
+    {
+      "expected": [
+        "gpu01",
+        "gpu02",
+        "gpu05",
+        "cpu7"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[01-02,05],cpu7"
+      },
+      "name": "expandHostlist \"gpu[01-02,05],cpu7\""
+    },
+    {
+      "expected": [
+        "rack1node[3-4]",
+        "rack2node[3-4]"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "rack[1-2]node[3-4]"
+      },
+      "name": "expandHostlist \"rack[1-2]node[3-4]\""
+    },
+    {
+      "expected": [
+        "dgx01a",
+        "dgx02a"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "dgx[01-02]a"
+      },
+      "name": "expandHostlist \"dgx[01-02]a\""
+    },
+    {
+      "expected": [],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[a-b]"
+      },
+      "name": "expandHostlist \"gpu[a-b]\""
+    },
+    {
+      "expected": [
+        "gpu01",
+        "gpu02"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[01-02,]"
+      },
+      "name": "expandHostlist \"gpu[01-02,]\""
+    },
+    {
+      "expected": [
+        "gpu3"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[3]"
+      },
+      "name": "expandHostlist \"gpu[3]\""
+    },
+    {
+      "expected": [
+        "n001",
+        "n002",
+        "n003"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "n[001-003]"
+      },
+      "name": "expandHostlist \"n[001-003]\""
+    },
+    {
+      "expected": [],
+      "input": {
+        "fn": "expandHostlist",
+        "input": ""
+      },
+      "name": "expandHostlist \"\""
+    },
+    {
+      "expected": [
+        "gpu01",
+        "gpu02",
+        "gpu05",
+        "gpu06"
+      ],
+      "input": {
+        "fn": "expandHostlist",
+        "input": "gpu[01-02],gpu[05-06]"
+      },
+      "name": "expandHostlist \"gpu[01-02],gpu[05-06]\""
+    },
+    {
+      "expected": "ALLOCATED",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "ALLOCATED"
+      },
+      "name": "shortNodeState \"ALLOCATED\""
+    },
+    {
+      "expected": "COMPLETING",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "COMPLETING"
+      },
+      "name": "shortNodeState \"COMPLETING\""
+    },
+    {
+      "expected": "DOWN",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "DOWN"
+      },
+      "name": "shortNodeState \"DOWN\""
+    },
+    {
+      "expected": "DRAINED",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "DRAINED"
+      },
+      "name": "shortNodeState \"DRAINED\""
+    },
+    {
+      "expected": "IDLE",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "IDLE"
+      },
+      "name": "shortNodeState \"IDLE\""
+    },
+    {
+      "expected": "MIXED",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "MIXED"
+      },
+      "name": "shortNodeState \"MIXED\""
+    },
+    {
+      "expected": "MIXED",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "MIXED+DRAIN"
+      },
+      "name": "shortNodeState \"MIXED+DRAIN\""
+    },
+    {
+      "expected": "ALLOCATED",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "ALLOCATED,RESERVED"
+      },
+      "name": "shortNodeState \"ALLOCATED,RESERVED\""
+    },
+    {
+      "expected": "IDLE",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "IDLE+CLOUD+POWERED_DOWN"
+      },
+      "name": "shortNodeState \"IDLE+CLOUD+POWERED_DOWN\""
+    },
+    {
+      "expected": "DOWN*",
+      "input": {
+        "fn": "shortNodeState",
+        "input": "DOWN*"
+      },
+      "name": "shortNodeState \"DOWN*\""
+    },
+    {
+      "expected": "",
+      "input": {
+        "fn": "shortNodeState",
+        "input": ""
+      },
+      "name": "shortNodeState \"\""
+    },
+    {
+      "expected": "",
+      "input": {
+        "fn": "shortReason",
+        "input": "None"
+      },
+      "name": "shortReason \"None\""
+    },
+    {
+      "expected": "hardware fault GPU0",
+      "input": {
+        "fn": "shortReason",
+        "input": "hardware fault GPU0"
+      },
+      "name": "shortReason \"hardware fault GPU0\""
+    },
+    {
+      "expected": "kernel upgrade pending",
+      "input": {
+        "fn": "shortReason",
+        "input": "kernel upgrade pending"
+      },
+      "name": "shortReason \"kernel upgrade pending\""
+    },
+    {
+      "expected": "scheduled maintenance",
+      "input": {
+        "fn": "shortReason",
+        "input": "scheduled maintenance"
+      },
+      "name": "shortReason \"scheduled maintenance\""
+    },
+    {
+      "expected": "",
+      "input": {
+        "fn": "shortReason",
+        "input": ""
+      },
+      "name": "shortReason \"\""
+    },
+    {
+      "expected": "",
+      "input": {
+        "fn": "shortReason",
+        "input": null
+      },
+      "name": "shortReason null"
+    },
+    {
+      "expected": "Rtx Pro 6000",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "rtx_pro_6000"
+      },
+      "name": "prettifyGpuModel \"rtx_pro_6000\""
+    },
+    {
+      "expected": "A100",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "a100"
+      },
+      "name": "prettifyGpuModel \"a100\""
+    },
+    {
+      "expected": "H100",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "h100"
+      },
+      "name": "prettifyGpuModel \"h100\""
+    },
+    {
+      "expected": "L40s",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "l40s"
+      },
+      "name": "prettifyGpuModel \"l40s\""
+    },
+    {
+      "expected": "2g.10gb",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "2g.10gb"
+      },
+      "name": "prettifyGpuModel \"2g.10gb\""
+    },
+    {
+      "expected": "",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": ""
+      },
+      "name": "prettifyGpuModel \"\""
+    },
+    {
+      "expected": "RTX A6000",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "RTX_A6000"
+      },
+      "name": "prettifyGpuModel \"RTX_A6000\""
+    },
+    {
+      "expected": " Leading",
+      "input": {
+        "fn": "prettifyGpuModel",
+        "input": "_leading"
+      },
+      "name": "prettifyGpuModel \"_leading\""
+    },
+    {
+      "expected": "''",
+      "input": {
+        "fn": "shellQuote",
+        "input": ""
+      },
+      "name": "shellQuote \"\""
+    },
+    {
+      "expected": "r.shaw",
+      "input": {
+        "fn": "shellQuote",
+        "input": "r.shaw"
+      },
+      "name": "shellQuote \"r.shaw\""
+    },
+    {
+      "expected": "gpu-long",
+      "input": {
+        "fn": "shellQuote",
+        "input": "gpu-long"
+      },
+      "name": "shellQuote \"gpu-long\""
+    },
+    {
+      "expected": "'145851_[3-64%1]'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "145851_[3-64%1]"
+      },
+      "name": "shellQuote \"145851_[3-64%1]\""
+    },
+    {
+      "expected": "'%i|%P|%j|%T|%M|%l|%D|%C|%R|%b'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "%i|%P|%j|%T|%M|%l|%D|%C|%R|%b"
+      },
+      "name": "shellQuote \"%i|%P|%j|%T|%M|%l|%D|%C|%R|%b\""
+    },
+    {
+      "expected": "ArrayJobID:24,ArrayTaskID:24,tres-alloc:512",
+      "input": {
+        "fn": "shellQuote",
+        "input": "ArrayJobID:24,ArrayTaskID:24,tres-alloc:512"
+      },
+      "name": "shellQuote \"ArrayJobID:24,ArrayTaskID:24,tres-alloc:512\""
+    },
+    {
+      "expected": "/home/r.shaw/logs/train.out",
+      "input": {
+        "fn": "shellQuote",
+        "input": "/home/r.shaw/logs/train.out"
+      },
+      "name": "shellQuote \"/home/r.shaw/logs/train.out\""
+    },
+    {
+      "expected": "cpu,dev",
+      "input": {
+        "fn": "shellQuote",
+        "input": "cpu,dev"
+      },
+      "name": "shellQuote \"cpu,dev\""
+    },
+    {
+      "expected": "'a b'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "a b"
+      },
+      "name": "shellQuote \"a b\""
+    },
+    {
+      "expected": "'o'\\''brien'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "o'brien"
+      },
+      "name": "shellQuote \"o'brien\""
+    },
+    {
+      "expected": "'it'\\''s a '\\''test'\\'''",
+      "input": {
+        "fn": "shellQuote",
+        "input": "it's a 'test'"
+      },
+      "name": "shellQuote \"it's a 'test'\""
+    },
+    {
+      "expected": "'$(rm -rf /)'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "$(rm -rf /)"
+      },
+      "name": "shellQuote \"$(rm -rf /)\""
+    },
+    {
+      "expected": "'back\\slash'",
+      "input": {
+        "fn": "shellQuote",
+        "input": "back\\slash"
+      },
+      "name": "shellQuote \"back\\\\slash\""
+    },
+    {
+      "expected": "-p",
+      "input": {
+        "fn": "shellQuote",
+        "input": "-p"
+      },
+      "name": "shellQuote \"-p\""
+    },
+    {
+      "expected": "145701",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145701"
+      },
+      "name": "scontrolJobId \"145701\""
+    },
+    {
+      "expected": "145756",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145756"
+      },
+      "name": "scontrolJobId \"145756\""
+    },
+    {
+      "expected": "145773",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145773"
+      },
+      "name": "scontrolJobId \"145773\""
+    },
+    {
+      "expected": "145782",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145782"
+      },
+      "name": "scontrolJobId \"145782\""
+    },
+    {
+      "expected": "145789",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145789"
+      },
+      "name": "scontrolJobId \"145789\""
+    },
+    {
+      "expected": "145791",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145791"
+      },
+      "name": "scontrolJobId \"145791\""
+    },
+    {
+      "expected": "145812",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145812"
+      },
+      "name": "scontrolJobId \"145812\""
+    },
+    {
+      "expected": "145817",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145817"
+      },
+      "name": "scontrolJobId \"145817\""
+    },
+    {
+      "expected": "145823",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145823"
+      },
+      "name": "scontrolJobId \"145823\""
+    },
+    {
+      "expected": "145840",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145840"
+      },
+      "name": "scontrolJobId \"145840\""
+    },
+    {
+      "expected": "145843_7",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145843_7"
+      },
+      "name": "scontrolJobId \"145843_7\""
+    },
+    {
+      "expected": "145847",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145847"
+      },
+      "name": "scontrolJobId \"145847\""
+    },
+    {
+      "expected": "145849",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145849"
+      },
+      "name": "scontrolJobId \"145849\""
+    },
+    {
+      "expected": "145851",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145851_[3-64%1]"
+      },
+      "name": "scontrolJobId \"145851_[3-64%1]\""
+    },
+    {
+      "expected": "145855",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "145855"
+      },
+      "name": "scontrolJobId \"145855\""
+    },
+    {
+      "expected": "92301",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92301"
+      },
+      "name": "scontrolJobId \"92301\""
+    },
+    {
+      "expected": "92312",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92312"
+      },
+      "name": "scontrolJobId \"92312\""
+    },
+    {
+      "expected": "92318",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92318"
+      },
+      "name": "scontrolJobId \"92318\""
+    },
+    {
+      "expected": "92335",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92335"
+      },
+      "name": "scontrolJobId \"92335\""
+    },
+    {
+      "expected": "92338",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92338"
+      },
+      "name": "scontrolJobId \"92338\""
+    },
+    {
+      "expected": "92341",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92341"
+      },
+      "name": "scontrolJobId \"92341\""
+    },
+    {
+      "expected": "92347",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92347"
+      },
+      "name": "scontrolJobId \"92347\""
+    },
+    {
+      "expected": "92352",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92352"
+      },
+      "name": "scontrolJobId \"92352\""
+    },
+    {
+      "expected": "92355",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92355"
+      },
+      "name": "scontrolJobId \"92355\""
+    },
+    {
+      "expected": "92358",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92358"
+      },
+      "name": "scontrolJobId \"92358\""
+    },
+    {
+      "expected": "92361",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "92361"
+      },
+      "name": "scontrolJobId \"92361\""
+    },
+    {
+      "expected": "999999",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "999999"
+      },
+      "name": "scontrolJobId \"999999\""
+    },
+    {
+      "expected": "6754",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "6754_[380-543%1]"
+      },
+      "name": "scontrolJobId \"6754_[380-543%1]\""
+    },
+    {
+      "expected": "6754_380",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "6754_380"
+      },
+      "name": "scontrolJobId \"6754_380\""
+    },
+    {
+      "expected": "6754",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "6754"
+      },
+      "name": "scontrolJobId \"6754\""
+    },
+    {
+      "expected": "9",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "9_[1-2]"
+      },
+      "name": "scontrolJobId \"9_[1-2]\""
+    },
+    {
+      "expected": "9",
+      "input": {
+        "fn": "scontrolJobId",
+        "input": "9_[1-2]_x"
+      },
+      "name": "scontrolJobId \"9_[1-2]_x\""
+    }
+  ],
+  "kind": "format-scalars",
+  "version": 1
+}

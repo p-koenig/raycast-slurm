@@ -12,3 +12,10 @@ compiled_raycast_rust
 
 # misc
 .DS_Store
+
+# macOS app (macos/) — generated build artifacts.
+# `.swiftpm` is already ignored above, which covers macos/SlurmKit/.swiftpm too.
+macos/*.xcodeproj
+macos/SlurmKit/.build/
+macos/build/
+DerivedData/

@@ -1,4 +1,7 @@
 import { Color } from "@raycast/api";
+// Type-only, so this never becomes a require cycle at runtime (slurm.ts imports
+// this module for its duration parsing).
+import type { SlurmNode } from "./slurm";
 
 export const STATE_COLORS: Record<string, Color> = {
   RUNNING: Color.Green,
@@ -262,8 +265,11 @@ export function gpuCountFromGres(gres: string): number {
 export function gpuCountFromTres(tres: string): number {
   // AllocTRES/CfgTRES examples: "cpu=16,mem=128G,gres/gpu=2", "cpu=64,gres/gpu:a100=4"
   if (!tres || tres === "(null)") return 0;
-  const m = /gres\/gpu(?::[^=,]+)?=(\d+)/.exec(tres);
-  return m ? Number(m[1]) : 0;
+  const eqM = /gres\/gpu(?::[^=,]+)?=(\d+)/.exec(tres);
+  if (eqM) return Number(eqM[1]);
+  // Per-node gres form (squeue %b): "gres/gpu:A100:4", "gres/gpu:2g.10gb:1", "gres/gpu:1".
+  const colonM = /gres\/gpu:(?:[^:=,]+:)?(\d+)(?:$|,)/.exec(tres);
+  return colonM ? Number(colonM[1]) : 0;
 }
 
 export function memFromTres(tres: string): string | null {
@@ -297,6 +303,16 @@ export function gpuLabelFromTres(tres: string): string | null {
     if (!count) return null;
     return `${count} GPU`;
   }
+  // Per-node gres form (squeue %b / tres-per-node): "gres/gpu:A100:4",
+  // "gres/gpu:2g.10gb:1" (MIG), "gres/gpu:1" (untyped). Distinct from the typed
+  // AllocTRES form above in that the count follows a colon, not "=". This is the
+  // shape seen on pending jobs whose AllocTRES isn't populated yet.
+  const perNodeM = /gres\/gpu:(?:([^:=,]+):)?(\d+)(?:$|,)/.exec(tres);
+  if (perNodeM) {
+    const count = Number(perNodeM[2]);
+    if (!count) return null;
+    return perNodeM[1] ? `${count}×${prettifyGpuModel(perNodeM[1])}` : `${count} GPU`;
+  }
   // GRES format (legacy / squeue %b): "gpu:a100:2", "gpu:8".
   const gresM = /(?:^|,)gpu(?::([^:,(]+))?:(\d+)/.exec(tres);
   if (gresM) {
@@ -323,6 +339,12 @@ export function gpuInfoFromTres(tres: string): { count: number; type: string | n
     const count = Number(genericM[1]);
     return count ? { count, type: null } : null;
   }
+  // Per-node gres form (squeue %b): "gres/gpu:A100:4", "gres/gpu:2g.10gb:1", "gres/gpu:1".
+  const perNodeM = /gres\/gpu:(?:([^:=,]+):)?(\d+)(?:$|,)/.exec(tres);
+  if (perNodeM) {
+    const count = Number(perNodeM[2]);
+    return count ? { count, type: perNodeM[1] ?? null } : null;
+  }
   const gresM = /(?:^|,)gpu(?::([^:,(]+))?:(\d+)/.exec(tres);
   if (gresM) {
     const count = Number(gresM[2]);
@@ -339,6 +361,60 @@ export function prettifyGpuModel(raw: string): string {
     .split("_")
     .map((t) => (t.length ? t[0].toUpperCase() + t.slice(1) : t))
     .join(" ");
+}
+
+// ---------- node display ----------
+
+export function shortNodeState(state: string): string {
+  // scontrol returns "MIXED+DRAIN" etc. Take the leading flag.
+  return state.split("+")[0].split(",")[0];
+}
+
+export function nodeStateColor(state: string): Color {
+  const s = state.toLowerCase();
+  if (s.includes("down") || s.includes("drain") || s.includes("fail")) return Color.Red;
+  if (s.includes("alloc")) return Color.Blue;
+  if (s.includes("mix")) return Color.Purple;
+  if (s.includes("idle")) return Color.Green;
+  if (s.includes("reserved") || s.includes("maint")) return Color.Orange;
+  return Color.SecondaryText;
+}
+
+export type NodeTag = { value: string; color: Color };
+
+// The chips describing how full a node is: state, CPU load, memory, and — only
+// for nodes that have any — GPU allocation. Shared by the Node Utilization list
+// and its per-node job drill-down, so a node reads identically in both places.
+export function nodeUtilTags(n: SlurmNode): NodeTag[] {
+  const usedMem = Math.max(0, n.realMemoryMB - n.freeMemoryMB);
+  const cpuRatio = n.cpuLoad != null && n.cpuTot ? n.cpuLoad / n.cpuTot : null;
+  const tags: NodeTag[] = [
+    { value: shortNodeState(n.state), color: nodeStateColor(n.state) },
+    {
+      value: n.cpuLoad != null ? `cpu ${n.cpuLoad.toFixed(2)}/${n.cpuTot}` : `cpu —/${n.cpuTot}`,
+      color:
+        cpuRatio == null
+          ? Color.SecondaryText
+          : cpuRatio > 1.0
+            ? Color.Red
+            : cpuRatio > 0.7
+              ? Color.Orange
+              : Color.Green,
+    },
+    {
+      value: `mem ${formatBytesMB(usedMem)}/${formatBytesMB(n.realMemoryMB)} (${formatPercent(usedMem, n.realMemoryMB)})`,
+      color: usedMem / Math.max(1, n.realMemoryMB) > 0.85 ? Color.Red : Color.Blue,
+    },
+  ];
+  const gpuTotal = gpuCountFromGres(n.gres);
+  if (gpuTotal) {
+    const gpuAlloc = gpuCountFromTres(n.allocTres) || gpuCountFromGres(n.gresUsed);
+    tags.push({
+      value: `gpu ${gpuAlloc}/${gpuTotal}`,
+      color: gpuAlloc >= gpuTotal ? Color.Red : gpuAlloc > 0 ? Color.Orange : Color.Green,
+    });
+  }
+  return tags;
 }
 
 export function gpuModelFromGres(gres: string, features: string): string {

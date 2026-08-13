@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { Action, ActionPanel, Color, Icon, LaunchType, List, launchCommand } from "@raycast/api";
+import { Action, ActionPanel, Color, Icon, LaunchType, List, launchCommand, useNavigation } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { listJobs, listNodes, type Job, type SlurmNode } from "./lib/slurm";
-import { formatBytesMB, formatPercent, gpuCountFromGres, gpuCountFromTres } from "./lib/format";
+import { nodeStateColor, nodeUtilTags } from "./lib/format";
+import { expandHostlist } from "./lib/hostlist";
 import { useActiveHosts, useSlurmUsers } from "./lib/session";
 import { fetchPerCluster, type ClusterResult } from "./lib/multi";
 import { matchesQuery } from "./lib/search";
 import { ClusterAuthRow } from "./lib/components/ClusterAuthRow";
+import { NodeJobsView } from "./lib/components/NodeJobsView";
 import {
   ClusterFilterDropdown,
   FILTER_ALL,
@@ -157,6 +159,7 @@ export default function NodeUtilization() {
                 key={`${r.host}:${n.name}`}
                 n={n}
                 host={r.host}
+                meUser={users[r.host]}
                 myJobs={myNodeSets[r.host]?.has(n.name) ?? false}
               />
             ))}
@@ -167,38 +170,10 @@ export default function NodeUtilization() {
   );
 }
 
-function NodeRow({ n, host, myJobs }: { n: SlurmNode; host: string; myJobs: boolean }) {
-  const usedMem = Math.max(0, n.realMemoryMB - n.freeMemoryMB);
-  const cpuRatio = n.cpuLoad != null && n.cpuTot ? n.cpuLoad / n.cpuTot : null;
-  const cpuColor =
-    cpuRatio == null ? Color.SecondaryText : cpuRatio > 1.0 ? Color.Red : cpuRatio > 0.7 ? Color.Orange : Color.Green;
-  const stateColor = nodeStateColor(n.state);
-  const gpuTotal = gpuCountFromGres(n.gres);
-  const gpuAlloc = gpuCountFromTres(n.allocTres) || gpuCountFromGres(n.gresUsed);
+function NodeRow({ n, host, meUser, myJobs }: { n: SlurmNode; host: string; meUser?: string; myJobs: boolean }) {
+  const { push } = useNavigation();
 
-  const accessories: List.Item.Accessory[] = [
-    { tag: { value: shortState(n.state), color: stateColor } },
-    {
-      tag: {
-        value: n.cpuLoad != null ? `cpu ${n.cpuLoad.toFixed(2)}/${n.cpuTot}` : `cpu —/${n.cpuTot}`,
-        color: cpuColor,
-      },
-    },
-    {
-      tag: {
-        value: `mem ${formatBytesMB(usedMem)}/${formatBytesMB(n.realMemoryMB)} (${formatPercent(usedMem, n.realMemoryMB)})`,
-        color: usedMem / Math.max(1, n.realMemoryMB) > 0.85 ? Color.Red : Color.Blue,
-      },
-    },
-  ];
-  if (gpuTotal) {
-    accessories.push({
-      tag: {
-        value: `gpu ${gpuAlloc}/${gpuTotal}`,
-        color: gpuAlloc >= gpuTotal ? Color.Red : gpuAlloc > 0 ? Color.Orange : Color.Green,
-      },
-    });
-  }
+  const accessories: List.Item.Accessory[] = nodeUtilTags(n).map((tag) => ({ tag }));
   if (myJobs) {
     accessories.push({ icon: { source: Icon.Person, tintColor: Color.Yellow } });
   }
@@ -207,13 +182,20 @@ function NodeRow({ n, host, myJobs }: { n: SlurmNode; host: string; myJobs: bool
     <List.Item
       title={n.name}
       subtitle={n.partitions.join(",")}
-      icon={{ source: Icon.Circle, tintColor: stateColor }}
+      icon={{ source: Icon.Circle, tintColor: nodeStateColor(n.state) }}
       keywords={[host, n.state, ...n.partitions, n.features]}
       accessories={accessories}
       actions={
         <ActionPanel>
-          <Action.CopyToClipboard title="Copy Node Name" content={n.name} />
-          {n.reason ? <Action.CopyToClipboard title="Copy Reason" content={n.reason} /> : null}
+          <Action
+            title="Show Running Jobs"
+            icon={Icon.Hammer}
+            onAction={() => push(<NodeJobsView node={n} host={host} meUser={meUser} />)}
+          />
+          <ActionPanel.Section>
+            <Action.CopyToClipboard title="Copy Node Name" content={n.name} />
+            {n.reason ? <Action.CopyToClipboard title="Copy Reason" content={n.reason} /> : null}
+          </ActionPanel.Section>
         </ActionPanel>
       }
     />
@@ -226,21 +208,6 @@ function nodeHaystack(host: string, n: SlurmNode): string {
   return [host, n.name, n.state, ...n.partitions, n.features].join(" ");
 }
 
-function shortState(state: string): string {
-  // scontrol returns "MIXED+DRAIN" etc. Take the leading flag.
-  return state.split("+")[0].split(",")[0];
-}
-
-function nodeStateColor(state: string): Color {
-  const s = state.toLowerCase();
-  if (s.includes("down") || s.includes("drain") || s.includes("fail")) return Color.Red;
-  if (s.includes("alloc")) return Color.Blue;
-  if (s.includes("mix")) return Color.Purple;
-  if (s.includes("idle")) return Color.Green;
-  if (s.includes("reserved") || s.includes("maint")) return Color.Orange;
-  return Color.SecondaryText;
-}
-
 function buildNodeSet(jobs: Job[]): Set<string> {
   const set = new Set<string>();
   for (const j of jobs) {
@@ -248,49 +215,6 @@ function buildNodeSet(jobs: Job[]): Set<string> {
     for (const n of expandHostlist(j.reasonOrNodeList)) set.add(n);
   }
   return set;
-}
-
-function expandHostlist(hl: string): string[] {
-  if (!hl) return [];
-  const out: string[] = [];
-  for (const piece of splitTopLevel(hl, ",")) {
-    const trimmed = piece.trim();
-    if (!trimmed) continue;
-    const m = /^([^[]*)\[([^\]]+)\](.*)$/.exec(trimmed);
-    if (!m) {
-      out.push(trimmed);
-      continue;
-    }
-    const [, prefix, ranges, suffix] = m;
-    for (const r of ranges.split(",")) {
-      const rm = /^(\d+)(?:-(\d+))?$/.exec(r.trim());
-      if (!rm) continue;
-      const start = Number(rm[1]);
-      const end = rm[2] ? Number(rm[2]) : start;
-      const width = rm[1].length;
-      for (let i = start; i <= end; i++) {
-        out.push(`${prefix}${String(i).padStart(width, "0")}${suffix}`);
-      }
-    }
-  }
-  return out;
-}
-
-function splitTopLevel(s: string, sep: string): string[] {
-  const out: string[] = [];
-  let depth = 0;
-  let start = 0;
-  for (let i = 0; i < s.length; i++) {
-    const c = s[i];
-    if (c === "[") depth++;
-    else if (c === "]") depth--;
-    else if (c === sep && depth === 0) {
-      out.push(s.slice(start, i));
-      start = i + 1;
-    }
-  }
-  out.push(s.slice(start));
-  return out;
 }
 
 function NoHostView() {
